@@ -1,0 +1,7 @@
+@import "_scrollbars.css";
+
+@import "tailwind/_base.css";
+@import "tailwind/_components.css";
+@import "tailwind/_utilities.css";
+
+@import "_themes.css";

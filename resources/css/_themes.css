@@ -1,0 +1,13 @@
+:root {
+    --body-font-size: 0.875rem;
+    /* --color-canvas-default: #0d1117; */
+    /* --color-fg-default: #e6edf3; */
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    font-size: var(--body-font-size, 14px);
+    line-height: 1.5;
+    color: '#1f1f1f';
+    background-color: '#F8F9FB';
+}
