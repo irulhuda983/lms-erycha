@@ -1,0 +1,1 @@
+import{_ as o}from"./_plugin-vue_export-helper-c27b6911.js";import{o as e,c as r}from"./app-c9829853.js";const c={},t={class:"w-full box-border overflow-x-hidden h-full pt-[54px]"};function s(f,l){return e(),r("div",t," Profil ")}const a=o(c,[["render",s]]);export{a as default};
