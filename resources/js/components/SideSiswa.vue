@@ -12,7 +12,7 @@ const route = useRoute()
 
 <template>
     <!-- 8859FF -->
-    <div class="hidden lg:flex w-full h-full box-boder flex-row lg:flex-col relative bg-[#171F46">
+    <div class="hidden lg:flex w-full h-full box-boder flex-row lg:flex-col relative bg-[#171F46]">
         <!-- logo -->
         <div class="w-full mt-[32px] box-border w-full flex items-center justify-center flex-col mb-[65px]">
             <div class="w-[100px] h-[100px] bg-white rounded-full flex items-center justify-center mb-[8px]">
