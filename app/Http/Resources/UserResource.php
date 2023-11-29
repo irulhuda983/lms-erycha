@@ -24,6 +24,9 @@ class UserResource extends JsonResource
             'role' => $this->role,
             'nik' => $this->pemilik->nik,
             'gender' => $this->pemilik->gender,
+            'tempat' => $this->pemilik->tempat,
+            'tanggal_lahir' => $this->pemilik->tanggal_lahir ? date('Y-m-d', strtotime($this->pemilik->tanggal_lahir)) : null,
+            'alamat' => $this->pemilik->alamat,
             'foto' => $this->pemilik->foto ? url('api/upload/' . optional($this->pemilik)->foto) : null,
         ];
     }

@@ -47,9 +47,7 @@ const fetchNilaiTertinggi = async () => {
             url: 'peserta/dashboard/nilai-tertinggi',
             method: 'GET',
         })
-
-        console.log(data)
-
+        
         nilaiTertinggi.value = data.data
     }catch(e){
         console.log(e)

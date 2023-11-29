@@ -46,8 +46,9 @@ const fetchData = async () => {
             method: 'GET',
             params: params,
         })
-
-        dataset.value = data.data
+        let items = data.data
+        let filter = items.filter((item) => { item.ujianSiswa == 0 })
+        dataset.value = filter
         pageInfo.value = data.meta
     }catch(e) {
         if(e.response.status == 401) {
@@ -259,12 +260,12 @@ onMounted(() => {
                     </tbody>
                     <tbody v-else>
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <td colspan="7" class="text-center px-6 py-4 font-normal text-gray-900 whitespace-nowrap dark:text-white italic">Tidak Ada Data</td>
+                            <td colspan="7" class="text-center px-6 py-4 font-normal text-gray-900 whitespace-nowrap dark:text-white italic">Tidak Ada Ujian Aktif</td>
                         </tr>
                     </tbody>
                 </table>
 
-                <div v-if="isLoading == false && dataset.length != 0" class="w-full border-t box-border bg-white flex items-center justify-between px-6 py-3">
+                <!-- <div v-if="isLoading == false && dataset.length != 0" class="w-full border-t box-border bg-white flex items-center justify-between px-6 py-3">
                     <div class="flex items-center justify-center space-x-2 text-xs">
                         <span>showing</span>
                         <select v-model="params.limit" @change.prevent="fetchData" class="text-xs px-1 py-1 rounded">
@@ -283,7 +284,7 @@ onMounted(() => {
                             @changePage="changePage"
                         />
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
