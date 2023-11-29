@@ -274,8 +274,8 @@ onMounted(() => {
         </div>
       </template>
       <template #body>
-        <div class="w-full flex items-start">
-            <div class="w-2/3 box-border">
+        <div class="w-full flex flex-col-reverse lg:flex-row items-start">
+            <div class="w-full lg:w-2/3 box-border mb-5 lg:mb-0">
                 <table class="w-full">
                     <tbody>
                         <tr class="border-y">
@@ -340,7 +340,7 @@ onMounted(() => {
                     </tbody>
                 </table>
             </div>
-            <div class="w-1/3 flex justify-center">
+            <div class="w-full lg:w-1/3 flex justify-center">
                 <div class="box-border bg-green-300/50 rounded">
                     <div class="px-24 py-2 bg-green-400 font-semibold text-white">Nilai</div>
                     <div class="text-center py-8 text-7xl font-bold">{{ detailTes.total }}</div>

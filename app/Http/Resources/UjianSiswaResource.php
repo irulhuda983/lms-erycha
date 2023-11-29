@@ -28,6 +28,7 @@ class UjianSiswaResource extends JsonResource
             'total' => $this->total,
             'ujian' => $this->ujian ? new UjianResource($this->ujian) : null,
             'soal' => $this->ujian ? new SoalResource($this->ujian->soal) : null,
+            'siswa' => $this->siswa ? new SiswaResource($this->siswa) : null,
         ];
     }
 }

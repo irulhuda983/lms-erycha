@@ -27,7 +27,7 @@ class UjianController extends Controller
     
     public function index(Request $request)
     {
-        $query = Ujian::where('is_active', 1)->paginate($request->limit ?? 10);
+        $query = Ujian::where('is_active', 1)->paginate(1000);
 
         return UjianResource::collection($query);
     }
@@ -81,7 +81,19 @@ class UjianController extends Controller
 
         $query = SoalItem::where('id_soal', $soal->id)->where('no_urut', $request->nomor_soal)->first();
 
+        if(!$query) {
+            return response()->json(['success' => false, 'message' => 'nor found', 'data' => null], 404);
+        }
+
         return new SoalItemResource($query);
+    }
+
+    public function getAllJawaban(Request $request, UjianSiswa $ujianSiswa)
+    {
+        $request->forList = true;
+        $jawaban = Jawaban::where('id_ujian_siswa', $ujianSiswa->id)->get();
+
+        return JawabanResource::collection($jawaban);
     }
 
     public function getJawaban(Request $request, UjianSiswa $ujianSiswa)

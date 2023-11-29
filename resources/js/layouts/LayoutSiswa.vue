@@ -8,7 +8,7 @@ import Sidebar from "@/components/SideSiswa.vue"
 
 <template>
     <div class="w-screen h-screen box-border overflow-x-hidden overflow-y-auto flex justufy-between relative bg-[#F2F2F2] text-[#424242] font-poppins text-[13px]">
-        <div class="w-full lg:w-[240px] lg:h-full fixed lg:relative bottom-0 box-border overflow-x-hidden flex-none">
+        <div class="w-full lg:w-[240px] lg:h-full fixed lg:relative bottom-0 box-border overflow-x-hidden flex-none z-10">
             <Sidebar />
         </div>
 

@@ -5,7 +5,15 @@ namespace App\Http\Controllers\SISWA;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
+use Carbon\Carbon;
+
 use App\Models\Materi;
+use App\Models\MateriRead;
 use App\Http\Resources\MateriResource;
 
 class MateriController extends Controller
@@ -26,9 +34,16 @@ class MateriController extends Controller
         return MateriResource::collection($query->paginate($limit));
     }
 
-    public function show(Materi $materi)
+    public function show(Request $request, Materi $materi)
     {
+        $user = $request->user();
+
         try{
+            MateriRead::create([
+                'id_siswa' => $user->pemilik->id,
+                'id_materi' => $materi->id,
+            ]);
+
             return new MateriResource($materi);
         }catch(\Exception $e) {
             Log::error($e->getMessage());

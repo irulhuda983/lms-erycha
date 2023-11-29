@@ -17,6 +17,7 @@ use App\Http\Controllers\ADMIN\UjianController;
 use App\Http\Controllers\ADMIN\OptController;
 
 use App\Http\Controllers\SISWA\AuthController as SiswaAuthController;
+use App\Http\Controllers\SISWA\DashboardController as SiswaDashboardController;
 use App\Http\Controllers\SISWA\MateriController as SiswaMateriController;
 use App\Http\Controllers\SISWA\UjianController as SiswaUjianController;
 
@@ -38,6 +39,14 @@ Route::prefix('peserta')->group(function() {
         Route::get('profil', [SiswaAuthController::class, 'getMe'])->middleware(['auth:api']);
         Route::post('refresh-token', [SiswaAuthController::class, 'refreshToken']);
         Route::post('/logout', [SiswaAuthController::class, 'logout'])->middleware(['auth:api']);
+    });
+
+    Route::prefix('dashboard')
+    ->controller(SiswaDashboardController::class)
+    ->middleware(['auth:api', 'role:admin|guru|siswa'])
+    ->group(function() {
+        Route::get('/popular-materi', 'popularMateri');
+        Route::get('/nilai-tertinggi', 'nilaiTertinggi');
     });
 
     Route::prefix('materi')
@@ -65,6 +74,7 @@ Route::prefix('peserta')->group(function() {
         Route::post('{ujian}/mulai', 'mulaiUjian');
         Route::post('{soal}/get-soal-item', 'getSoal');
         Route::post('{ujianSiswa}/get-jawaban', 'getJawaban');
+        Route::post('{ujianSiswa}/get-all-jawaban', 'getAllJawaban');
         Route::post('{ujianSiswa}/jawab-soal', 'jawabSoal');
         Route::post('{ujianSiswa}/selesai', 'selesaiTes');
     });

@@ -12,11 +12,15 @@ const route = useRoute()
 
 <template>
     <!-- 8859FF -->
-    <div class="hidden lg:flex w-full h-full box-boder flex-row lg:flex-col relative bg-[#171F46]">
+    <div class="hidden lg:flex w-full h-full box-boder flex-row lg:flex-col relative bg-[#171F46">
         <!-- logo -->
         <div class="w-full mt-[32px] box-border w-full flex items-center justify-center flex-col mb-[65px]">
             <div class="w-[100px] h-[100px] bg-white rounded-full flex items-center justify-center mb-[8px]">
-                <p class="text-[42px] text-[#171F46] font-bold">D</p>
+                <p class="text-[42px] text-[#171F46] font-bold">    
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 h-8 lg:w-16 lg:h-16 fill-current">
+                        <path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path>
+                    </svg>
+                </p>
             </div>
             <div class="font-medium text-white text-[18px]">DMS LMS App.</div>
         </div>
@@ -61,7 +65,7 @@ const route = useRoute()
                     <div>Ujian</div>
                 </router-link>
 
-                <!-- <router-link
+                <router-link
                     :to="{name: 'siswaProfil'}"
                     class="mb-1 block w-full h-[45px] flex items-center space-x-3 px-[16px] rounded-[10px]"
                     :class="route.meta.menu == 'siswaProfil' ? 'bg-[#FFFFFF] text-[#171F46] font-semibold' : 'text-white'"
@@ -71,7 +75,7 @@ const route = useRoute()
                     </svg>
 
                     <div>Profil</div>
-                </router-link> -->
+                </router-link>
             </div>
         </div>
 

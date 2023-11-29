@@ -33,6 +33,11 @@ class Materi extends Model
         return $this->belongsTo(Guru::class, 'id_guru');
     }
 
+    public function materiRead()
+    {
+        return $this->hasMany(MateriRead::class, 'id_materi');
+    }
+
     public function scopeSearch($query, $search)
     {
         if($search) {

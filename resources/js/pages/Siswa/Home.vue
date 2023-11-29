@@ -1,5 +1,6 @@
 <script setup>
 import { ref, defineAsyncComponent, reactive, onMounted, watch } from 'vue'
+import MateriIcon from '@/assets/img/materi_icon.png'
 import BannerHome from '@/components/BannerHome.vue'
 import { useTesStore } from "@/stores/tes"
 import { useRouter } from 'vue-router'
@@ -8,10 +9,50 @@ const userData = localStorage.getItem('USERSISWA') ? JSON.parse(localStorage.get
 
 const router = useRouter()
 const tesStore = useTesStore()
+const popularMateri = ref([])
+const latestMateri = ref([])
+const nilaiTertinggi = ref([])
+const bgList = ref(['bg-[#7F83FF]', 'bg-[#93E674]', 'bg-[#FF808B]', 'bg-[#FFA880]'])
+const bgListMateri = ref(['bg-[#FDD0D5]', 'bg-[#D0EAFB]', 'bg-[#D0FCEB]', 'bg-[#FEFDD1]'])
 
 const cekIsRun = () => {
     if(tesStore.isRunningTest == 1) {
         router.push({ path: '/tes' })
+    }else{
+        fetchPopularmateri()
+        fetchNilaiTertinggi()
+    }
+}
+
+const fetchPopularmateri = async () => {
+    try{
+        const { data } = await instanceSiswa({
+            url: 'peserta/dashboard/popular-materi',
+            method: 'GET',
+        })
+
+        const items = data.data
+        latestMateri.value = items.slice(0,4)
+
+        const sorted = items.sort((a, b) => b.jumlah_dibaca - a.jumlah_dibaca);
+        popularMateri.value = sorted.slice(0,4)
+    }catch(e){
+        console.log(e)
+    }
+}
+
+const fetchNilaiTertinggi = async () => {
+    try{
+        const { data } = await instanceSiswa({
+            url: 'peserta/dashboard/nilai-tertinggi',
+            method: 'GET',
+        })
+
+        console.log(data)
+
+        nilaiTertinggi.value = data.data
+    }catch(e){
+        console.log(e)
     }
 }
 
@@ -30,51 +71,42 @@ onMounted(() => {
 
             <div class="lg:w-2/5 h-full box-border overflow-hidden">
                 <div class="w-full box-border grid grid-cols-2 grid-rows-2 gap-4">
-                    <div class="w-full bg-[#7F83FF] h-[150px] rounded-[20px] box-border p-4">
-                        <div class="rounded-full bg-white w-10 h-10 flex items-center justify-center mb-3">ic</div>
-                        <div class="text-gray-800 font-semibold text-base mb-1">Desain Grafis</div>
-                        <div class="w-full bg-white/50 box-border p-2 text-[10px] font-medium rounded-[7px] backdrop-blur-md">20 Dibaca</div>
-                    </div>
-                    <div class="w-full bg-[#93E674] h-[150px] rounded-[20px] box-border p-4">
-                        <div class="rounded-full bg-white w-10 h-10 flex items-center justify-center mb-3">ic</div>
-                        <div class="text-gray-800 font-semibold text-base mb-1">Desain Grafis</div>
-                        <div class="w-full bg-white/50 box-border p-2 text-[10px] font-medium rounded-[7px] backdrop-blur-md">20 Dibaca</div>
-                    </div>
-                    <div class="w-full bg-[#FF808B] h-[150px] rounded-[20px] box-border p-4">
-                        <div class="rounded-full bg-white w-10 h-10 flex items-center justify-center mb-3">ic</div>
-                        <div class="text-gray-800 font-semibold text-base mb-1">Desain Grafis</div>
-                        <div class="w-full bg-white/50 box-border p-2 text-[10px] font-medium rounded-[7px] backdrop-blur-md">20 Dibaca</div>
-                    </div>
-                    <div class="w-full bg-[#FFA880] h-[150px] rounded-[20px] box-border p-4">
-                        <div class="rounded-full bg-white w-10 h-10 flex items-center justify-center mb-3">ic</div>
-                        <div class="text-gray-800 font-semibold text-base mb-1">Desain Grafis</div>
-                        <div class="w-full bg-white/50 box-border p-2 text-[10px] font-medium rounded-[7px] backdrop-blur-md">20 Dibaca</div>
+                    <div v-for="(item, i) in popularMateri" :key="i" class="w-full h-[150px] rounded-[20px] box-border p-4" :class="bgList[i]">
+                        <div class="rounded-full bg-white w-10 h-10 flex items-center justify-center mb-3">BHS</div>
+                        <div class="text-gray-800 font-semibold text-base mb-1">{{ item.judul }}</div>
+                        <div class="w-full bg-white/50 box-border p-2 text-[10px] font-medium rounded-[7px] backdrop-blur-md">{{ item.jumlah_dibaca }} Kali Dibaca</div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="w-full box-border lg:flex mb-24">
             <div class="w-full lg:w-2/5 box-border bg-white p-3 box-border rounded lg:mr-5 mb-5 lg:mb-0">
-                <h1 class="text-base text-[#222222] font-semibold mb-4">Best Performens</h1>
+                <div class="flex items-center justify-between mb-4">
+                    <h1 class="text-base text-[#222222] font-semibold">Hasil Ujian Tertinggi</h1>
+                    <!-- <button @click.prevent="router.push({ name: 'siswaHasilUjian' })" class="text-gray-600 bg-gray-100 rounded px-3 py-1 text-xs hover:text-white hover:bg-green-400">View All</button> -->
+                </div>
                 <div class="w-full box-border">
                     <table class="w-full">
                         <thead>
                             <tr>
-                                <td class="px-2 py-3">Rank</td>
+                                <td class="px-2 py-3 w-[80px] border-b">Rank</td>
                                 <!-- <td>NIK</td> -->
-                                <td class="px-2 py-3">Nama</td>
-                                <td class="px-2 py-3">Point</td>
+                                <td class="px-2 py-3 border-b">Nama</td>
+                                <td class="px-2 py-3 border-b w-[20px] text-end">Point</td>
                             </tr>
                         </thead>
 
-                        <tbody>
-                            <tr v-for="i in 5" :key="i">
-                               <td class="px-2 py-3 border-t">
-                                    <div class="w-6 h-6 bg-[#FDD0D5] rounded-[4px] flex items-center justify-center text-white text-[12px]">{{ i }}</div>
+                        <tbody v-if="nilaiTertinggi.length != 0">
+                            <tr v-for="(item, i) in nilaiTertinggi" :key="i">
+                               <td class="px-2 py-3 border-b">
+                                    <div class="w-6 h-6 bg-[#FDD0D5] rounded-[4px] flex items-center justify-center text-white text-[12px]">{{ i+1 }}</div>
                                 </td>
                                 <!-- <td>3522022611960003</td> -->
-                                <td class="px-2 py-3 border-t">M. Khoirul Huda</td>
-                                <td class="px-2 py-3 border-t font-semibold">80</td>
+                                <td class="px-2 py-3 border-b">
+                                    <div>{{ item.siswa.nama }}</div>
+                                    <div class="text-[8px] text-gray-500">{{ item.siswa.nik ?? 'w81932' }}</div>
+                                </td>
+                                <td class="px-2 py-3 border-b font-semibold w-[20px] text-end">{{ item.total }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -84,36 +116,17 @@ onMounted(() => {
             <div class="w-full lg:w-2/5 box-border bg-white p-3 box-border rounded lg:mr-5 mb-5 lg:mb-0">
                 <div class="flex items-center justify-between mb-4">
                     <h1 class="text-base text-[#222222] font-semibold">Materi Terbaru</h1>
-                    <a href="">View All</a>
+                    <button @click.prevent="router.push({ name: 'siswaMateri' })" class="text-gray-600 bg-gray-100 rounded px-3 py-1 text-xs hover:text-white hover:bg-green-400">View All</button>
                 </div>
 
-                <div class="w-full box-border">
-                    <div class="w-full rounded mb-3 p-3 flex bg-[#FDD0D5]">
-                        <div class="w-12 h-12 bg-white flex-none rounded flex items-center justify-center mr-4">logo</div>
-                        <div>
-                            <p class="font-semibold">What is Photograpi design ?</p>
-                            <p class="text-[12px]">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero, voluptatum.</p>
+                <div v-if="latestMateri.length != 0" class="w-full box-border">
+                    <div v-for="(item, i) in latestMateri" :key="i" @click.prevent="router.push({ name: 'siswaDetailMateri', params: { id: item.id} })" class="cursor-pointer w-full rounded mb-3 p-3 flex" :class="bgListMateri[i]">
+                        <div class="w-12 h-12 bg-white flex-none rounded flex items-center justify-center mr-4">
+                            <img :src="MateriIcon" alt="" class="w-12">
                         </div>
-                    </div>
-                    <div class="w-full rounded mb-3 p-3 flex bg-[#D0EAFB]">
-                        <div class="w-12 h-12 bg-white flex-none rounded flex items-center justify-center mr-4">logo</div>
                         <div>
-                            <p class="font-semibold">What is Photograpi design ?</p>
-                            <p class="text-[12px]">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero, voluptatum.</p>
-                        </div>
-                    </div>
-                    <div class="w-full rounded mb-3 p-3 flex bg-[#D0FCEB]">
-                        <div class="w-12 h-12 bg-white flex-none rounded flex items-center justify-center mr-4">logo</div>
-                        <div>
-                            <p class="font-semibold">What is Photograpi design ?</p>
-                            <p class="text-[12px]">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero, voluptatum.</p>
-                        </div>
-                    </div>
-                    <div class="w-full rounded mb-3 p-3 flex bg-[#FEFDD1]">
-                        <div class="w-12 h-12 bg-white flex-none rounded flex items-center justify-center mr-4">logo</div>
-                        <div>
-                            <p class="font-semibold">What is Photograpi design ?</p>
-                            <p class="text-[12px]">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero, voluptatum.</p>
+                            <p class="font-semibold">{{ item.judul }}</p>
+                            <p class="text-[12px]">{{ item.excerpt }}</p>
                         </div>
                     </div>
                 </div>

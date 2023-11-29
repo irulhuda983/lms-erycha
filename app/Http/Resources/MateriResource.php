@@ -26,12 +26,13 @@ class MateriResource extends JsonResource
             'id_guru' => $this->id_guru,
             'guru' => optional($this->guru)->nama,
             'judul' => $this->judul,
-            'excerpt' => Str::limit($this->judul, 20, ' ...'),
+            'excerpt' => Str::limit($this->deskripsi, 20, ' ...'),
             'slug' => $this->slug,
             'deskripsi' => $this->deskripsi,
             'media_image' => $this->media_image ? url('api/upload/' . $this->media_image) : null,
             'media_file' => $this->media_file ? url('api/upload/' . $this->media_file) : null,
             'media_video' => $this->media_video ? url('api/upload/' . $this->media_video) : null,
+            'jumlah_dibaca' => $this->materiRead->count(),
             'created_at' => date('Y-m-d', strtotime($this->created_at))
         ];
     }
