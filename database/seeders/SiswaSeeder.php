@@ -20,7 +20,7 @@ class SiswaSeeder extends Seeder
         $siswa->auth()->create([
             'username' => 'peserta',
             'nama' => 'peserta',
-            'password' => bcrypt('Lalisandi12'),
+            'password' => bcrypt('Peserta123'),
             'role' => 'siswa',
         ]);
     }

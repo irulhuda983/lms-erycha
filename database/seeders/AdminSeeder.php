@@ -38,7 +38,7 @@ class AdminSeeder extends Seeder
         $tendik->auth()->create([
             'username' => 'sudo',
             'nama' => 'M. Khoirul Huda',
-            'password' => bcrypt('Lalisandi12'),
+            'password' => bcrypt('Admin123'),
             'role' => 'admin',
         ]);
     }
