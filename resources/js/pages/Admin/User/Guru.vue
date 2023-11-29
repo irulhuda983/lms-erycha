@@ -1,23 +1,4 @@
 <script setup>
-// 'nama' => $request->nama,
-// 'gelar_depan' => $request->gelar_depan,
-// 'gelar_belakang' => $request->gelar_belakang,
-// 'nik' => $request->nik,
-// 'niy' => $request->niy,
-// 'nuptk' => $request->nuptk,
-// 'nip' => $request->nip,
-// 'gender' => $request->gender,
-// 'tempat_lahir' => $request->tempat_lahir,
-// 'tgl_lahir' => $request->tgl_lahir,
-// 'jenis_ptk' => $request->jenis_ptk,
-// 'alamat' => $request->alamat,
-// 'rt' => $request->rt,
-// 'rw' => $request->rw,
-// 'desa' => $request->desa,
-// 'kec' => $request->kec,
-// 'kab' => $request->kab,
-// 'prov' => $request->prov,
-// 'foto' => $foto,
 import { ref, defineAsyncComponent, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { Modal } from 'flowbite-vue'
@@ -53,7 +34,11 @@ const params = reactive({
 const fetchData = async () => {
     isLoading.value = true
     try{
-        const { data } = await axios.get('/admin/guru', { params })
+        const { data } = await instanceAdmin({
+            url: `/admin/guru`,
+            method: 'GET',
+            params: params
+        })
         dataset.value = data.data
         pageInfo.value = data.meta
     }catch(e){

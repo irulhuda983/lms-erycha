@@ -12,25 +12,29 @@ const isLoading = ref(false)
 const isGrid = ref(false)
 
 const pageInfo = ref({
-		current_page: 1,
-		from: null,
-		last_page: 1,
-		per_page: 10,
-		to: null,
-		total: 0
-	})
+    current_page: 1,
+    from: null,
+    last_page: 1,
+    per_page: 10,
+    to: null,
+    total: 0
+})
 
 const params = reactive({
-      filter: "",
-      page: 1,
-      limit: 10,
-      order: "judul:asc",
-    })
+    filter: "",
+    page: 1,
+    limit: 10,
+    order: "judul:asc",
+})
 
 const fetchData = async () => {
     isLoading.value = true
     try{
-        const { data } = await axios.get('/admin/materi', { params })
+        const { data } = await instanceAdmin({
+            url: '/admin/materi',
+            method: 'GET',
+            params: params,
+        })
 
         dataset.value = data.data
         pageInfo.value = data.meta

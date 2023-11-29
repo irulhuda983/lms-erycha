@@ -9,11 +9,34 @@ window.clientId = document.head.querySelector('meta[name="client-id"]').content
 window.clientSecret = document.head.querySelector('meta[name="client-secret"]').content
 
 import axios from 'axios';
-window.axios = axios;
+// window.axios = axios;
+// window.axios2 = axios;
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-window.axios.defaults.baseURL = document.head.querySelector('meta[name="base-url"]').content + "/api/";
-window.axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('TOKEN')}`
+// window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+// window.axios.defaults.baseURL = document.head.querySelector('meta[name="base-url"]').content + "/api/";
+// window.axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('TOKEN')}`
+
+// window.axios2.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+// window.axios2.defaults.baseURL = document.head.querySelector('meta[name="base-url"]').content + "/api/";
+// window.axios2.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('TOKENSISWA')}`
+
+window.instanceAdmin = axios.create({
+    baseURL: document.head.querySelector('meta[name="base-url"]').content + "/api/",
+    headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('TOKEN')}`
+    },
+})
+
+window.instanceSiswa = axios.create({
+    baseURL: document.head.querySelector('meta[name="base-url"]').content + "/api/",
+    headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('TOKENSISWA')}`
+    },
+})
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

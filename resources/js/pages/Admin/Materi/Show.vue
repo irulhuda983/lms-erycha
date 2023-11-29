@@ -49,7 +49,11 @@ const payload = reactive({
 const fetchData = async () => {
     isLoading.value = true
     try{
-        const { data } = await axios.get(`/admin/materi/${route.params.id}/detail`)
+        const { data } = await instanceAdmin({
+            url: `/admin/materi/${route.params.id}/detail`,
+            method: 'GET',
+        })
+        
         const materi = data.data
         payload.id = materi.id
         payload.id_kelas = materi.id_kelas
@@ -85,7 +89,12 @@ const closeModalDelete = () => {
 const deleteData = async () => {
     isLoading.value = true
     try{
-        const { data } = await axios.delete(`/admin/materi/${route.params.id}/delete`)
+        // const { data } = await axios.delete(`/admin/materi/${route.params.id}/delete`)
+
+        const { data } = await instanceAdmin({
+            url: `/admin/materi/${route.params.id}/delete`,
+            method: 'DELETE',
+        })
 
         notify({
             type: 'success',

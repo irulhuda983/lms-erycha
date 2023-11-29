@@ -9,7 +9,7 @@ class Ujian extends Model
 {
     use HasFactory;
 
-    protected $table = 'soal';
+    protected $table = 'ujian';
 
     protected $guarded = ['id'];
 
@@ -33,7 +33,7 @@ class Ujian extends Model
         return $this->belongsTo(Materi::class, 'id_materi');
     }
 
-    public function tipeUjian()
+    public function jenisUjian()
     {
         return $this->belongsTo(TipeUjian::class, 'id_jenis_ujian');
     }
@@ -41,6 +41,11 @@ class Ujian extends Model
     public function guru()
     {
         return $this->belongsTo(Guru::class, 'id_guru');
+    }
+
+    public function ujianSiswa()
+    {
+        return $this->hasMany(UjianSiswa::class, 'id_ujian');
     }
 
     public function scopeSearch($query, $search)

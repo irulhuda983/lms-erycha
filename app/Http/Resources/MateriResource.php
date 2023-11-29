@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
 
 class MateriResource extends JsonResource
 {
@@ -25,6 +26,7 @@ class MateriResource extends JsonResource
             'id_guru' => $this->id_guru,
             'guru' => optional($this->guru)->nama,
             'judul' => $this->judul,
+            'excerpt' => Str::limit($this->judul, 20, ' ...'),
             'slug' => $this->slug,
             'deskripsi' => $this->deskripsi,
             'media_image' => $this->media_image ? url('api/upload/' . $this->media_image) : null,

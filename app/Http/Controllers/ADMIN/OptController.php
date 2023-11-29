@@ -60,7 +60,7 @@ class OptController extends Controller
 
     public function soal(Request $request)
     {
-        $query = Soal::select('id', 'nama as text')->search($request->search)->orderBy('nama', 'asc')->get();
+        $query = Soal::select('id', 'id_mapel', 'id_guru', 'id_kelas', 'id_rombel', 'nama as text')->search($request->search)->orderBy('nama', 'asc')->get();
 
         return response()->json(['data' => $query], 200);
     }

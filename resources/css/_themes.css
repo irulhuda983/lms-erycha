@@ -11,3 +11,30 @@ body {
     color: '#1f1f1f';
     background-color: '#F8F9FB';
 }
+
+.font-poppins {
+    font-family: 'Poppins', sans-serif;
+}
+
+.font-opensans {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.shadow-primary {
+    box-shadow: 0 0 1px #0000000d, 0 2px 4px #00000014;
+}
+
+.shadow-secondary {
+    box-shadow: 0px 0px 0px 1px rgba(9, 9, 9, 0.10);
+}
+
+#progress-bar {
+    animation: swipe 1s;
+}
+
+@keyframes swipe {
+    0%   {width: 20%;}
+    25%  {width: 40%;}
+    50%  {width: 60%;}
+    100% {width: 80%;}
+  }

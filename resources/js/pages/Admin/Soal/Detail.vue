@@ -1,12 +1,39 @@
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import loader from '@/assets/gif/loader.gif'
 
 const router = useRouter()
 const route = useRoute()
-
 const isLoading = ref(false)
+
+const soal = ref([])
+const soalPg = ref([])
+const soalEssay = ref([])
+
+const fetchData = async () => {
+    isLoading.value = true
+    try{
+        const { data } = await instanceAdmin({
+            url: `/admin/soal/${route.params.id}/detail`,
+            method: 'GET',
+        })
+        soal.value = data.data
+        soalPg.value = data.data.list_pg
+        soalEssay.value = data.data.list_essay
+    }catch(e) {
+        if(e.response.status == 401) {
+            localStorage.removeItem('TOKEN')
+            location.reload()
+        }
+    }finally {
+        isLoading.value = false
+    }
+}
+
+onMounted(() => {
+    fetchData()
+})
 
 </script>
 
@@ -40,125 +67,124 @@ const isLoading = ref(false)
                     <div class="flex space-x-3 mb-2">
                         <div class="w-52 font-semibold">Kode Soal</div>
                         <div>:</div>
-                        <div>M. Khoirul Huda</div>
+                        <div>{{ soal.kode }}</div>
                     </div>
 
                     <div class="flex space-x-3 mb-2">
                         <div class="w-52 font-semibold">Nama Soal</div>
                         <div>:</div>
-                        <div>M. Khoirul Huda</div>
+                        <div>{{ soal.nama }}</div>
                     </div>
 
                     <div class="flex space-x-3 mb-2">
                         <div class="w-52 font-semibold">Mata Pelajaran</div>
                         <div>:</div>
-                        <div>M. Khoirul Huda</div>
+                        <div>{{ soal.mapel }}</div>
                     </div>
 
                     <div class="flex space-x-3 mb-2">
                         <div class="w-52 font-semibold">Guru</div>
                         <div>:</div>
-                        <div>M. Khoirul Huda</div>
+                        <div>{{ soal.guru }}</div>
                     </div>
 
                     <div class="flex space-x-3 mb-2">
                         <div class="w-52 font-semibold">Kelas</div>
                         <div>:</div>
-                        <div>M. Khoirul Huda</div>
+                        <div>{{ soal.kelas }}</div>
                     </div>
 
                     <div class="flex space-x-3 mb-2">
-                        <div class="w-52 font-semibold">Jumlah Pilihan Ganda</div>
+                        <div class="w-52 font-semibold">Rombel</div>
                         <div>:</div>
-                        <div>M. Khoirul Huda</div>
+                        <div>{{ soal.rombel }}</div>
                     </div>
                 </div>
 
                 <div class="w-1/2">
                     <div class="flex space-x-3 mb-2">
-                        <div class="w-52 font-semibold">Kode Soal</div>
+                        <div class="w-52 font-semibold">Tipe Soal</div>
                         <div>:</div>
-                        <div>M. Khoirul Huda</div>
+                        <div class="uppercase">{{ soal.tipe_soal }}</div>
                     </div>
 
                     <div class="flex space-x-3 mb-2">
-                        <div class="w-52 font-semibold">Nama Soal</div>
+                        <div class="w-52 font-semibold">Jumlah PG</div>
                         <div>:</div>
-                        <div>M. Khoirul Huda</div>
+                        <div>{{ soal.jml_pg }}</div>
                     </div>
 
                     <div class="flex space-x-3 mb-2">
-                        <div class="w-52 font-semibold">Mata Pelajaran</div>
+                        <div class="w-52 font-semibold">Jumlah Essay</div>
                         <div>:</div>
-                        <div>M. Khoirul Huda</div>
+                        <div>{{ soal.jml_essay }}</div>
                     </div>
 
                     <div class="flex space-x-3 mb-2">
-                        <div class="w-52 font-semibold">Guru</div>
+                        <div class="w-52 font-semibold">Bobot PG</div>
                         <div>:</div>
-                        <div>M. Khoirul Huda</div>
+                        <div>{{ soal.bobot_pg }}</div>
                     </div>
 
                     <div class="flex space-x-3 mb-2">
-                        <div class="w-52 font-semibold">Kelas</div>
+                        <div class="w-52 font-semibold">Bobot Essay</div>
                         <div>:</div>
-                        <div>M. Khoirul Huda</div>
+                        <div>{{ soal.bobot_essay }}</div>
                     </div>
 
                     <div class="flex space-x-3 mb-2">
-                        <div class="w-52 font-semibold">Jumlah Pilihan Ganda</div>
+                        <div class="w-52 font-semibold">KKM</div>
                         <div>:</div>
-                        <div>M. Khoirul Huda</div>
+                        <div>{{ soal.kkm }}</div>
                     </div>
                 </div>
             </div>
 
             <div class="w-full p-6 box-border bg-white border-b text-gray-600 bg-white">
-                <div class="w-full mb-10">
+                <div v-if="soalPg.length != 0" class="w-full mb-10">
                     <div class="w-full flex justify-between items-center mb-5">
                         <div class="font-semibold mb-0 lg:mb-2">I. Pilihan Ganda</div>
                         <a href="#" @click.prevent="router.push({ name: 'listPgSoal', params: {id: route.params.id} })" class="block rounded px-3 py-2 border text-xs text-gray-600 font-semibold hover:border-indigo-500 hover:bg-indigo-500 hover:text-white">Edit Pilihan Ganda</a>
                     </div>
 
-                    <div v-for="i in 40" :key="i" class="w-full flex mb-5">
-                        <div class="flex-none w-8">{{ i }}.</div>
+                    <div v-for="(item, i) in soalPg" :key="i" class="w-full flex mb-5">
+                        <div class="flex-none w-8">{{ item.no_urut }}.</div>
                         <div class="w-full">
-                            <div class="mb-3">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias modi odit ratione cumque eveniet enim nulla temporibus cupiditate minus explicabo a dicta eum, ipsum veniam! A odio consequuntur temporibus! Tenetur accusamus sit non sed eaque nobis vel laudantium molestias distinctio?
+                            <div class="mb-3" v-html="item.text_soal">
                             </div>
                             <div class="flex mb-2">
                                 <div class="w-1/2">
                                     <div class="flex space-x-3 mb-1.5">
-                                        <div>a.</div> <div>Lorem ipsum dolor sit amet consectetur.</div>
+                                        <div>a.</div> <div v-html="item.pil_a"></div>
                                     </div>
                                     <div class="flex space-x-3 mb-1.5">
-                                        <div>b.</div> <div>Lorem ipsum dolor sit amet consectetur.</div>
+                                        <div>b.</div> <div v-html="item.pil_b"></div>
                                     </div>
                                 </div>
 
                                 <div class="w-1/2">
                                     <div class="flex space-x-3 mb-1.5">
-                                        <div>c.</div> <div>Lorem ipsum dolor sit amet consectetur.</div>
+                                        <div>c.</div> <div v-html="item.pil_c"></div>
                                     </div>
                                     <div class="flex space-x-3 mb-1.5">
-                                        <div>d.</div> <div>Lorem ipsum dolor sit amet consectetur.</div>
+                                        <div>d.</div> <div v-html="item.pil_d"></div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="font-semibold italic">Kunci Jawaban : A</div>
+                            <div class="font-semibold italic">Kunci Jawaban : {{ item.kunci_jawaban }}</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="w-full">
+                <div v-if="soalEssay.length != 0" class="w-full">
                     <div class="w-full flex justify-between items-center mb-5">
                         <div class="font-semibold mb-0 lg:mb-2">II. Essay</div>
                         <a href="#" @click.prevent="router.push({ name: 'listEssaySoal', params: {id: route.params.id} })" class="block rounded px-3 py-2 border text-xs text-gray-600 font-semibold hover:border-indigo-500 hover:bg-indigo-500 hover:text-white">Edit Essay</a>
                     </div>
 
-                    <div v-for="i in 5" :key="i" class="w-full flex mb-5">
-                        <div class="flex-none w-8">{{ i }}.</div>
+                    <div v-for="(item, i) in soalEssay" :key="i" class="w-full flex mb-5">
+                        <div class="flex-none w-8">{{ i + 1 }}.</div>
                         <div class="w-full">
                             <div class="mb-3">
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias modi odit ratione cumque eveniet enim nulla temporibus cupiditate minus explicabo a dicta eum, ipsum veniam! A odio consequuntur temporibus! Tenetur accusamus sit non sed eaque nobis vel laudantium molestias distinctio?

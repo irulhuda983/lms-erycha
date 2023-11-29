@@ -45,7 +45,7 @@ class MateriController extends Controller
         $user = $request->user();
 
         $rules = [
-            'id_kelas' => 'required',
+            'id_kelas' => 'nullable',
             'id_rombel' => 'nullable',
             'id_mapel' => 'required',
             'id_guru' => 'nullable',
@@ -99,7 +99,7 @@ class MateriController extends Controller
         $user = $request->user();
 
         $rules = [
-            'id_kelas' => 'required',
+            'id_kelas' => 'nullable',
             'id_rombel' => 'nullable',
             'id_mapel' => 'required',
             'judul' => 'required',

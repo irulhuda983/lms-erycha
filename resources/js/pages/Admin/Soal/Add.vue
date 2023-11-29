@@ -1,10 +1,16 @@
 <script setup>
 
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import loader from '@/assets/gif/loader.gif'
+import { useNotification } from "@kyvg/vue3-notification"
 
 const router = useRouter()
+const { notify } = useNotification()
+const optKelas = ref([])
+const optMapel = ref([])
+const optRombel = ref([])
+const optGuru = ref([])
 
 const isLoading = ref(false)
 
@@ -46,10 +52,138 @@ const errors = reactive({
     is_active: null,
 })
 
-const storeData = () => {
-    console.log('ok')
-    router.push({ name: 'soal' })
+const getOptKelas = async () => {
+    try{
+        const { data } = await axios.get(`/opt/kelas`)
+        optKelas.value = data.data
+    }catch(e) {
+        if(e.response.status == 401) {
+            localStorage.removeItem('TOKEN')
+            location.reload()
+        }else {
+            notify({
+                text: "Faliled to add, Server is Maintenent",
+                type: 'error',
+                duration: 2000
+            })
+        }
+    }
 }
+
+const getOptMapel = async () => {
+    try{
+        const { data } = await axios.get(`/opt/mapel`)
+        optMapel.value = data.data
+    }catch(e) {
+        if(e.response.status == 401) {
+            localStorage.removeItem('TOKEN')
+            location.reload()
+        }else {
+            notify({
+                text: "Faliled to add, Server is Maintenent",
+                type: 'error',
+                duration: 2000
+            })
+        }
+    }
+}
+
+const getOptRombel = async () => {
+    try{
+        const { data } = await axios.get(`/opt/rombel`)
+        optRombel.value = data.data
+    }catch(e) {
+        if(e.response.status == 401) {
+            localStorage.removeItem('TOKEN')
+            location.reload()
+        }else {
+            notify({
+                text: "Faliled to add, Server is Maintenent",
+                type: 'error',
+                duration: 2000
+            })
+        }
+    }
+}
+
+const getOptGuru = async () => {
+    try{
+        const { data } = await axios.get(`/opt/guru`)
+        optGuru.value = data.data
+    }catch(e) {
+        if(e.response.status == 401) {
+            localStorage.removeItem('TOKEN')
+            location.reload()
+        }else {
+            notify({
+                text: "Faliled to add, Server is Maintenent",
+                type: 'error',
+                duration: 2000
+            })
+        }
+    }
+}
+
+const storeData = async () => {
+    if(errors.media_file || errors.media_image || errors.media_video) {
+        notify({
+            text: "Anda memiliki input yang tidak sesuai, silahkan cek kembali input anda",
+            type: 'error',
+            duration: 2000
+        })
+        return
+    }
+        isLoading.value = true
+    try{
+        const { data } = await instanceAdmin({
+            url: `/admin/soal`,
+            method: 'POST',
+            data: payload,
+        })
+        notify({
+            text: "Berhasil tambah soal",
+            type: 'success',
+            duration: 2000
+        })
+        router.push({ name: 'soal' })
+    }catch(e) {
+        if(e.response.status == 401) {
+            localStorage.removeItem('TOKEN')
+            location.reload()
+        }else if(e.response.status == 422) {
+            const err = e.response.data.errors
+            errors.id_mapel = err.id_mapel ? err.id_mapel[0] : null
+            errors.id_guru = err.id_guru ? err.id_guru[0] : null
+            errors.id_kelas = err.id_kelas ? err.id_kelas[0] : null
+            errors.id_rombel = err.id_rombel ? err.id_rombel[0] : null
+            errors.tipe_mapel_soal = err.tipe_mapel_soal ? err.tipe_mapel_soal[0] : null
+            errors.tipe_soal = err.tipe_soal ? err.tipe_soal[0] : null
+            errors.nama = err.nama ? err.nama[0] : null
+            errors.jml_pg = err.jml_pg ? err.jml_pg[0] : null
+            errors.jml_essay = err.jml_essay ? err.jml_essay[0] : null
+            errors.bobot_pg = err.bobot_pg ? err.bobot_pg[0] : null
+            errors.bobot_essay = err.bobot_essay ? err.bobot_essay[0] : null
+            errors.jml_pil_essay = err.jml_pil_essay ? err.jml_pil_essay[0] : null
+            errors.kkm = err.kkm ? err.kkm[0] : null
+            errors.is_agama = err.is_agama ? err.is_agama[0] : null
+        }else {
+            notify({
+                text: "Faliled to add, Server is Maintenent",
+                type: 'error',
+                duration: 2000
+            })
+        }
+    }finally {
+        isLoading.value = false
+    }
+}
+
+onMounted(() => {
+    getOptKelas()
+    getOptGuru()
+    getOptMapel()
+    getOptRombel()
+})
 
 </script>
 
@@ -92,10 +226,8 @@ const storeData = () => {
                             :class="errors.id_kelas ? 'border-red-400':'border-gray-300'"
                             @focus="errors.id_kelas = null"
                         >
-                            <option>United States</option>
-                            <option>Canada</option>
-                            <option>France</option>
-                            <option>Germany</option>
+                            <option value="">Semua Kelas</option>
+                            <option v-for="(item, i) in optKelas" :key="i" :value="item.id">{{ item.text }}</option>
                         </select>
                         <div v-if="errors.id_kelas" class="text-red-500 italic text-xs mt-1">{{ errors.id_kelas }}</div>
                     </div>
@@ -107,10 +239,8 @@ const storeData = () => {
                             :class="errors.id_mapel ? 'border-red-400':'border-gray-300'"
                             @focus="errors.id_mapel = null"
                         >
-                            <option>United States</option>
-                            <option>Canada</option>
-                            <option>France</option>
-                            <option>Germany</option>
+                            <option value="">Pilih Mapel</option>
+                            <option v-for="(item, i) in optMapel" :key="i" :value="item.id">{{ item.text }}</option>
                         </select>
                         <div v-if="errors.id_mapel" class="text-red-500 italic text-xs mt-1">{{ errors.id_mapel }}</div>
                     </div>
@@ -122,32 +252,28 @@ const storeData = () => {
                             :class="errors.id_guru ? 'border-red-400':'border-gray-300'"
                             @focus="errors.id_guru = null"
                         >
-                            <option>United States</option>
-                            <option>Canada</option>
-                            <option>France</option>
-                            <option>Germany</option>
+                            <option value="">Pilih Guru</option>
+                            <option v-for="(item, i) in optGuru" :key="i" :value="item.id">{{ item.text }}</option>
                         </select>
                         <div v-if="errors.id_guru" class="text-red-500 italic text-xs mt-1">{{ errors.id_guru }}</div>
                     </div>
                 </div>
 
                 <div class="w-full flex flex-col lg:flex-row lg:space-x-3">
-                    <div class="mb-6 w-1/3">
+                    <!-- <div class="mb-6 w-1/3">
                         <label for="kelas" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rombel</label>
                         <select id="kelas" v-model="payload.id_rombel"
                             class="bg-gray-50 border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                             :class="errors.id_rombel ? 'border-red-400':'border-gray-300'"
                             @focus="errors.id_rombel = null"
                         >
-                            <option>United States</option>
-                            <option>Canada</option>
-                            <option>France</option>
-                            <option>Germany</option>
+                            <option value="">Pilih Rombel</option>
+                            <option v-for="(item, i) in optRombel" :key="i" :value="item.id">{{ item.text }}</option>
                         </select>
                         <div v-if="errors.id_rombel" class="text-red-500 italic text-xs mt-1">{{ errors.id_rombel }}</div>
-                    </div>
+                    </div> -->
 
-                    <div class="mb-6 w-1/3">
+                    <div class="mb-6 w-1/2">
                         <label for="mapel" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipe Soal</label>
                         <select id="mapel" v-model="payload.tipe_soal"
                             class="bg-gray-50 border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -162,7 +288,7 @@ const storeData = () => {
                         <div v-if="errors.tipe_soal" class="text-red-500 italic text-xs mt-1">{{ errors.tipe_soal }}</div>
                     </div>
 
-                    <div class="mb-6 w-1/3">
+                    <div class="mb-6 w-1/2">
                         <label for="guru" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Soal Agama</label>
                         <select id="guru" v-model="payload.is_agama"
                             class="bg-gray-50 border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -178,7 +304,7 @@ const storeData = () => {
                 </div>
 
                 <div class="w-full flex flex-col lg:flex-row lg:space-x-3">
-                    <div class="mb-6 w-1/3">
+                    <div class="mb-6 w-1/2">
                         <label for="jml_pg" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jumlah Soal Pilihan Ganda</label>
                         <input v-model="payload.jml_pg" type="number" id="jml_pg"
                             class="bg-gray-50 border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -188,7 +314,7 @@ const storeData = () => {
                         <div v-if="errors.jml_pg" class="text-red-500 italic text-xs mt-1">{{ errors.jml_pg }}</div>
                     </div>
 
-                    <div class="mb-6 w-1/3">
+                    <div class="mb-6 w-1/2">
                         <label for="bobot_pg" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bobot Pilihan Ganda</label>
                         <input v-model="payload.bobot_pg" type="number" id="bobot_pg"
                             class="bg-gray-50 border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -210,8 +336,8 @@ const storeData = () => {
                 </div>
 
                 <div class="w-full flex flex-col lg:flex-row lg:space-x-3">
-                    <div class="mb-6 w-1/3">
-                        <label for="jml_essay" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jumlah Soal Pilihan Ganda</label>
+                    <div class="mb-6 w-1/2">
+                        <label for="jml_essay" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jumlah Soal Essay</label>
                         <input v-model="payload.jml_essay" type="number" id="jml_essay"
                             class="bg-gray-50 border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                             :class="errors.jml_essay ? 'border-red-400':'border-gray-300'"
@@ -220,8 +346,8 @@ const storeData = () => {
                         <div v-if="errors.jml_essay" class="text-red-500 italic text-xs mt-1">{{ errors.jml_essay }}</div>
                     </div>
 
-                    <div class="mb-6 w-1/3">
-                        <label for="bobot_essay" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bobot Pilihan Ganda</label>
+                    <div class="mb-6 w-1/2">
+                        <label for="bobot_essay" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bobot Essay</label>
                         <input v-model="payload.bobot_essay" type="number" id="bobot_essay"
                             class="bg-gray-50 border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                             :class="errors.bobot_essay ? 'border-red-400':'border-gray-300'"

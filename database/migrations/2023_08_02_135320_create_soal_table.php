@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('jml_essay')->nullable();
             $table->string('bobot_pg')->nullable();
             $table->string('bobot_essay')->nullable();
-            $table->string('jml_pil_essay')->nullable();
+            $table->string('jml_pil_pg')->nullable();
             $table->string('kkm')->nullable();
             $table->integer('is_agama')->default(0);
             $table->integer('is_active')->default(1);

@@ -31,13 +31,13 @@ const route = useRoute()
                                 :class="route.meta.subMenu == 'mapel' ? 'text-blue-700' : ''"
                             >Mapel</router-link>
                         </li>
-                        <li>
+                        <!-- <li>
                             <router-link
                                 :to="{name: 'rombel'}"
                                 class="block py-2 pl-3 pr-4 rounded hover:text-blue-700"
                                 :class="route.meta.subMenu == 'rombel' ? 'text-blue-700' : ''"
                             >Rombel</router-link>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </div>

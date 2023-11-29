@@ -1,19 +1,59 @@
 <script setup>
-import { ref, defineAsyncComponent, reactive } from 'vue'
+import { ref, defineAsyncComponent, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { Modal } from 'flowbite-vue'
 
 const Pagination = defineAsyncComponent(() => import('@/components/Pagination.vue'))
 const router = useRouter()
-const dataset = ref([{
-    id: 1
-}])
+const dataset = ref([])
 const isLoading = ref(false)
 const isGrid = ref(false)
 
-const changePage = () => {
-    console.log('ok')
+const pageInfo = ref({
+    current_page: 1,
+    from: null,
+    last_page: 1,
+    per_page: 10,
+    to: null,
+    total: 0
+})
+
+const params = reactive({
+    filter: "",
+    page: 1,
+    limit: 10,
+    order: "nama:asc",
+})
+
+const fetchData = async () => {
+    isLoading.value = true
+    try{
+        const { data } = await instanceAdmin({
+            url: '/admin/soal',
+            method: 'GET',
+            params: params,
+        })
+
+        dataset.value = data.data
+        pageInfo.value = data.meta
+    }catch(e) {
+        if(e.response.status == 401) {
+            localStorage.removeItem('TOKEN')
+            location.reload()
+        }
+    }finally {
+        isLoading.value = false
+    }
 }
+
+const changePage = (page) => {
+    params.page = page
+    fetchData()
+}
+
+onMounted(() => {
+    fetchData()
+})
 </script>
 
 
@@ -44,14 +84,14 @@ const changePage = () => {
                     Tidak Ada Soal
                 </div>
                 <div v-else class="grid grid-cols-4 gap-5">
-                    <div v-for="i in 12" :key="i" @click.prevent="router.push({ name: 'showMateri', params: { id: 1 } })" class="flex items-center relative space-x-5 rounded-lg cursor-pointer bg-sky-50 box-border p-4 text-gray-600">
+                    <div v-for="(item, i) in dataset" :key="i" @click.prevent="router.push({ name: 'showMateri', params: { id: item.id } })" class="flex items-center relative space-x-5 rounded-lg cursor-pointer bg-sky-50 box-border p-4 text-gray-600">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                             <path fill-rule="evenodd" d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0016.5 9h-1.875a1.875 1.875 0 01-1.875-1.875V5.25A3.75 3.75 0 009 1.5H5.625zM7.5 15a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5A.75.75 0 017.5 15zm.75 2.25a.75.75 0 000 1.5H12a.75.75 0 000-1.5H8.25z" clip-rule="evenodd" />
                         <path d="M12.971 1.816A5.23 5.23 0 0114.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 013.434 1.279 9.768 9.768 0 00-6.963-6.963z" />
                         </svg>
 
                         <div class="">
-                            <div>Matematika Kelas 10</div>
+                            <div>{{ item.nama }}</div>
                         </div>
 
                         <div class="absolute right-0 px-4">
@@ -149,28 +189,28 @@ const changePage = () => {
                         </tr>
                     </thead>
                     <tbody v-if="dataset.length != 0">
-                        <tr @click.prevent="router.push({ name: 'detailSoal', params: { id: 1 } })" class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <tr v-for="(item, i) in dataset" :key="i" @click.prevent="router.push({ name: 'detailSoal', params: { id: item.id } })" class="cursor-pointer bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                             <td class="px-6 py-4 font-normal text-gray-900 whitespace-nowrap dark:text-white">
-                                1
+                                {{ (pageInfo.current_page - 1) * pageInfo.per_page + 1 + i }}
                             </td>
                             <td class="px-6 py-4 font-normal text-gray-900 whitespace-nowrap dark:text-white">
-                                BAB I : Theorema Pytagoras
+                                {{ item.nama }}
                             </td>
                             <td class="px-6 py-4 font-normal text-gray-900 whitespace-nowrap dark:text-white">
-                                10
+                                {{ item.kelas }}
                             </td>
                             <td class="px-6 py-4 font-normal text-gray-900 whitespace-nowrap dark:text-white">
-                                Matematika
+                                {{ item.mapel }}
                             </td>
                             <td class="px-6 py-4 font-normal text-gray-900 whitespace-nowrap dark:text-white">
-                                Erycha
+                                {{ item.guru }}
                             </td>
                             <td class="px-6 py-4 font-normal text-gray-900 whitespace-nowrap dark:text-white">
-                                20 Januari 2022
+                                {{ item.created_at }}
                             </td>
                             <td class="px-6 py-4 text-right">
                                 <div class="w-full flex justify-end space-x-2">
-                                    <a href="#" class="block font-normal text-gray-600 hover:text-indigo-600">
+                                    <a href="#" @click.prevent="router.push({ name: 'detailSoal', params: { id: item.id } })" class="block font-normal text-gray-600 hover:text-indigo-600">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="w-5 h-5">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                                         </svg>
@@ -187,14 +227,21 @@ const changePage = () => {
                 </table>
 
                 <div v-if="isLoading == false && dataset.length != 0" class="w-full border-t box-border bg-white flex items-center justify-between px-6 py-3">
-                    <div>
-                        <span class="text-xs">showing</span>
+                    <div class="flex items-center justify-center space-x-2 text-xs">
+                        <span>showing</span>
+                        <select v-model="params.limit" @change.prevent="fetchData" class="text-xs px-1 py-1 rounded">
+                            <option :value="10">10</option>
+                            <option :value="50">50</option>
+                            <option :value="100">100</option>
+                        </select>
+                        <div>from {{ pageInfo.from }}</div>
+                        <div>to {{ pageInfo.to }}</div>
                     </div>
                     <div>
                         <Pagination
-                            :total="10"
-                            :currentPage="1"
-                            :perPage="5"
+                            :total="pageInfo.total"
+                            :currentPage="pageInfo.current_page"
+                            :perPage="pageInfo.per_page"
                             @changePage="changePage"
                         />
                     </div>

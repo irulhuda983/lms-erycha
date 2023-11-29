@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('id_siswa')->nullable();
             $table->datetime('w_mulai')->nullable();
             $table->datetime('w_selesai')->nullable();
+            $table->datetime('max_time')->nullable();
             $table->string('jml_pg_benar')->nullable();
             $table->string('jml_pg_salah')->nullable();
             $table->string('skor_pg')->nullable();

@@ -1,13 +1,20 @@
 <script setup>
 
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import loader from '@/assets/gif/loader.gif'
+import { useNotification } from "@kyvg/vue3-notification"
 
 const router = useRouter()
 const route = useRoute()
+const { notify } = useNotification()
+const optKelas = ref([])
+const optMapel = ref([])
+const optRombel = ref([])
+const optGuru = ref([])
 
 const isLoading = ref(false)
+const isLoadingSave = ref(false)
 
 const payload = reactive({
     id_mapel: '',
@@ -47,10 +54,133 @@ const errors = reactive({
     is_active: null,
 })
 
+const getOptKelas = async () => {
+    try{
+        const { data } = await instanceAdmin({
+            url: `/opt/kelas`,
+            method: 'GET',
+        })
+        optKelas.value = data.data
+    }catch(e) {
+        if(e.response.status == 401) {
+            localStorage.removeItem('TOKEN')
+            location.reload()
+        }else {
+            notify({
+                text: "Faliled to add, Server is Maintenent",
+                type: 'error',
+                duration: 2000
+            })
+        }
+    }
+}
+
+const getOptMapel = async () => {
+    try{
+        const { data } = await instanceAdmin({
+            url: `/opt/mapel`,
+            method: 'GET',
+        })
+        optMapel.value = data.data
+    }catch(e) {
+        if(e.response.status == 401) {
+            localStorage.removeItem('TOKEN')
+            location.reload()
+        }else {
+            notify({
+                text: "Faliled to add, Server is Maintenent",
+                type: 'error',
+                duration: 2000
+            })
+        }
+    }
+}
+
+const getOptRombel = async () => {
+    try{
+        const { data } = await instanceAdmin({
+            url: `/opt/rombel`,
+            method: 'GET',
+        })
+        optRombel.value = data.data
+    }catch(e) {
+        if(e.response.status == 401) {
+            localStorage.removeItem('TOKEN')
+            location.reload()
+        }else {
+            notify({
+                text: "Faliled to add, Server is Maintenent",
+                type: 'error',
+                duration: 2000
+            })
+        }
+    }
+}
+
+const getOptGuru = async () => {
+    try{
+        const { data } = await instanceAdmin({
+            url: `/opt/guru`,
+            method: 'GET',
+        })
+        optGuru.value = data.data
+    }catch(e) {
+        if(e.response.status == 401) {
+            localStorage.removeItem('TOKEN')
+            location.reload()
+        }else {
+            notify({
+                text: "Faliled to add, Server is Maintenent",
+                type: 'error',
+                duration: 2000
+            })
+        }
+    }
+}
+
+const fetchData = async () => {
+    isLoading.value = true
+    try{
+        const { data } = await instanceAdmin({
+            url: `/admin/soal/${route.params.id}/detail`,
+            method: 'GET',
+        })
+        const soal = data.data
+
+        payload.id_mapel = soal.id_mapel
+        payload.id_guru = soal.id_guru
+        payload.id_kelas = soal.id_kelas
+        payload.id_rombel = soal.id_rombel
+        payload.tipe_soal = soal.tipe_soal
+        payload.nama = soal.nama
+        payload.jml_pg = soal.jml_pg
+        payload.jml_essay = soal.jml_essay
+        payload.bobot_pg = soal.bobot_pg
+        payload.bobot_essay = soal.bobot_essay
+        payload.kkm = soal.kkm
+        payload.is_agama = soal.is_agama
+    }catch(e) {
+        if(e.response.status == 401) {
+            localStorage.removeItem('TOKEN')
+            location.reload()
+        }
+    }finally {
+        isLoading.value = false
+    }
+}
+
 const storeData = () => {
     console.log('ok')
     router.push({ name: 'detailSoal', params: { id: route.params.id } })
 }
+
+onMounted(() => {
+    getOptKelas()
+    getOptGuru()
+    getOptMapel()
+    getOptRombel()
+    fetchData()
+})
 
 </script>
 
@@ -93,10 +223,8 @@ const storeData = () => {
                             :class="errors.id_kelas ? 'border-red-400':'border-gray-300'"
                             @focus="errors.id_kelas = null"
                         >
-                            <option>United States</option>
-                            <option>Canada</option>
-                            <option>France</option>
-                            <option>Germany</option>
+                            <option value="">Pilih Kelas</option>
+                            <option v-for="(item, i) in optKelas" :key="i" :value="item.id">{{ item.text }}</option>
                         </select>
                         <div v-if="errors.id_kelas" class="text-red-500 italic text-xs mt-1">{{ errors.id_kelas }}</div>
                     </div>
@@ -108,10 +236,8 @@ const storeData = () => {
                             :class="errors.id_mapel ? 'border-red-400':'border-gray-300'"
                             @focus="errors.id_mapel = null"
                         >
-                            <option>United States</option>
-                            <option>Canada</option>
-                            <option>France</option>
-                            <option>Germany</option>
+                            <option value="">Pilih Mapel</option>
+                            <option v-for="(item, i) in optMapel" :key="i" :value="item.id">{{ item.text }}</option>
                         </select>
                         <div v-if="errors.id_mapel" class="text-red-500 italic text-xs mt-1">{{ errors.id_mapel }}</div>
                     </div>
@@ -123,10 +249,8 @@ const storeData = () => {
                             :class="errors.id_guru ? 'border-red-400':'border-gray-300'"
                             @focus="errors.id_guru = null"
                         >
-                            <option>United States</option>
-                            <option>Canada</option>
-                            <option>France</option>
-                            <option>Germany</option>
+                            <option value="">Pilih Guru</option>
+                            <option v-for="(item, i) in optGuru" :key="i" :value="item.id">{{ item.text }}</option>
                         </select>
                         <div v-if="errors.id_guru" class="text-red-500 italic text-xs mt-1">{{ errors.id_guru }}</div>
                     </div>
@@ -140,10 +264,8 @@ const storeData = () => {
                             :class="errors.id_rombel ? 'border-red-400':'border-gray-300'"
                             @focus="errors.id_rombel = null"
                         >
-                            <option>United States</option>
-                            <option>Canada</option>
-                            <option>France</option>
-                            <option>Germany</option>
+                            <option value="">Pilih Rombel</option>
+                            <option v-for="(item, i) in optRombel" :key="i" :value="item.id">{{ item.text }}</option>
                         </select>
                         <div v-if="errors.id_rombel" class="text-red-500 italic text-xs mt-1">{{ errors.id_rombel }}</div>
                     </div>
@@ -235,7 +357,7 @@ const storeData = () => {
             </div>
 
             <div class="border-t px-6 py-4 box-order">
-                <div v-if="isLoading" class="flex items-center justify-end">
+                <div v-if="isLoadingSave" class="flex items-center justify-end">
                     <div class="flex items-center">
                         <img :src="loader" alt="" class="w-8">
                         <div class="text-gray-600 italic">Menyimpan Data</div>

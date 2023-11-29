@@ -25,14 +25,15 @@ class SoalController extends Controller
 
         $idGuru = $user->role == 'guru' ? $user->pemilik->id : null;
 
-        $query = Soal::search($search)->scopeGuru($idGuru)->orderBy($col, $sort);
+        $query = Soal::search($search)->guru($idGuru)->orderBy($col, $sort);
 
         return SoalResource::collection($query->paginate($limit));
     }
 
-    public function show(Soal $soal)
+    public function show(Request $request, Soal $soal)
     {
         try{
+            $request->withSoalItem = true;
             return new SoalResource($soal);
         }catch(\Exception $e) {
             Log::error($e->getMessage());
@@ -56,8 +57,8 @@ class SoalController extends Controller
             'jml_essay' => 'nullable',
             'bobot_pg' => 'nullable',
             'bobot_essay' => 'nullable',
-            'jml_pil_essay' => 'nullable',
-            'kkm' => 'nullable',
+            'jml_pil_pg' => 'nullable',
+            'kkm' => 'required',
             'is_agama' => 'nullable|in:0,1',
             'is_active' => 'nullable|in:0,1',
         ];
@@ -87,10 +88,10 @@ class SoalController extends Controller
                 'jml_essay' => $request->jml_essay,
                 'bobot_pg' => $request->bobot_pg,
                 'bobot_essay' => $request->bobot_essay,
-                'jml_pil_essay' => $request->jml_pil_essay,
+                'jml_pil_pg' => $request->jml_pil_pg,
                 'kkm' => $request->kkm,
                 'is_agama' => $request->is_agama,
-                'is_active' => $request->is_active,
+                'is_active' => 1,
             ]);
 
             DB::commit();
@@ -109,7 +110,7 @@ class SoalController extends Controller
 
         $rules = [
             'id_mapel' => 'required',
-            'id_kelas' => 'required',
+            'id_kelas' => 'nullable',
             'id_rombel' => 'nullable',
             'kode' => 'nullable',
             'tipe_mapel_soal' => 'nullable',
@@ -119,8 +120,8 @@ class SoalController extends Controller
             'jml_essay' => 'nullable',
             'bobot_pg' => 'nullable',
             'bobot_essay' => 'nullable',
-            'jml_pil_essay' => 'nullable',
-            'kkm' => 'nullable',
+            'jml_pil_pg' => 'nullable',
+            'kkm' => 'required',
             'is_agama' => 'nullable|in:0,1',
             'is_active' => 'nullable|in:0,1',
         ];
@@ -148,7 +149,7 @@ class SoalController extends Controller
                 'jml_essay' => $request->jml_essay,
                 'bobot_pg' => $request->bobot_pg,
                 'bobot_essay' => $request->bobot_essay,
-                'jml_pil_essay' => $request->jml_pil_essay,
+                'jml_pil_pg' => $request->jml_pil_pg,
                 'kkm' => $request->kkm,
                 'is_agama' => $request->is_agama,
                 'is_active' => $request->is_active,

@@ -52,7 +52,11 @@ const resetPayloadAndError = () => {
 const fetchData = async () => {
     isLoading.value = true
     try{
-        const { data } = await axios.get('/admin/kelas', { params })
+        const { data } = await instanceAdmin({
+            url: '/admin/kelas',
+            method: 'GET',
+            params: params,
+        })
 
         dataset.value = data.data
         pageInfo.value = data.meta
@@ -78,8 +82,11 @@ const closeModalAdd = () => {
 const storeData = async () => {
     isLoadingModalAdd.value = true
     try{
-
-        const { data } = await axios.post(`/admin/kelas`, payload)
+        const { data } = await instanceAdmin({
+            url: `/admin/kelas`,
+            method: 'POST',
+            data: payload,
+        })
         fetchData()
         closeModalAdd()
     }catch(e) {
@@ -104,7 +111,10 @@ const storeData = async () => {
 
 const showModalEdit = async (id) => {
     try{
-        const { data } = await axios.get(`/admin/kelas/${id}/detail`)
+        const { data } = await instanceAdmin({
+            url: `/admin/kelas/${id}/detail`,
+            method: 'GET',
+        })
 
         payload.id = id
         payload.kode = data.data.kode
@@ -133,7 +143,11 @@ const editData = async () => {
     isLoadingModalEdit.value = true
     try{
 
-        const { data } = await axios.post(`/admin/kelas/${payload.id}/update`, payload)
+        const { data } = await instanceAdmin({
+            url: `/admin/kelas/${payload.id}/update`,
+            method: 'POST',
+            data: payload,
+        })
         fetchData()
         closeModalEdit()
     }catch(e) {
@@ -158,7 +172,10 @@ const editData = async () => {
 
 const showModalDelete = async (id) => {
     try{
-        const { data } = await axios.get(`/admin/kelas/${id}/detail`)
+        const { data } = await instanceAdmin({
+            url: `/admin/kelas/${id}/detail`,
+            method: 'GET',
+        })
 
         payload.id = id
         payload.kode = data.data.kode
@@ -186,8 +203,11 @@ const closeModalDelete = () => {
 const deleteData = async () => {
     isLoadingModalDelete.value = true
     try{
+        const { data } = await instanceAdmin({
+            url: `/admin/kelas/${payload.id}/delete`,
+            method: 'DELETE',
+        })
 
-        const { data } = await axios.delete(`/admin/kelas/${payload.id}/delete`, payload)
         fetchData()
         closeModalDelete()
     }catch(e) {

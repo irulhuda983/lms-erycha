@@ -52,7 +52,11 @@ const resetPayloadAndError = () => {
 const fetchData = async () => {
     isLoading.value = true
     try{
-        const { data } = await axios.get('/admin/mapel', { params })
+        const { data } = await instanceAdmin({
+            url: '/admin/mapel',
+            method: 'GET',
+            params: params,
+        })
 
         dataset.value = data.data
         pageInfo.value = data.meta
@@ -78,8 +82,11 @@ const closeModalAdd = () => {
 const storeData = async () => {
     isLoadingModalAdd.value = true
     try{
-
-        const { data } = await axios.post(`/admin/mapel`, payload)
+        const { data } = await instanceAdmin({
+            url: '/admin/mapel',
+            method: 'POST',
+            data: payload,
+        })
         fetchData()
         closeModalAdd()
     }catch(e) {
@@ -104,7 +111,10 @@ const storeData = async () => {
 
 const showModalEdit = async (id) => {
     try{
-        const { data } = await axios.get(`/admin/mapel/${id}/detail`)
+        const { data } = await instanceAdmin({
+            url: `/admin/mapel/${id}/detail`,
+            method: 'GET',
+        })
 
         payload.id = id
         payload.kode = data.data.kode
@@ -132,8 +142,12 @@ const closeModalEdit = () => {
 const editData = async () => {
     isLoadingModalEdit.value = true
     try{
+        const { data } = await instanceAdmin({
+            url: `/admin/mapel/${payload.id}/update`,
+            method: 'POST',
+            data: payload,
+        })
 
-        const { data } = await axios.post(`/admin/mapel/${payload.id}/update`, payload)
         fetchData()
         closeModalEdit()
     }catch(e) {
@@ -158,7 +172,10 @@ const editData = async () => {
 
 const showModalDelete = async (id) => {
     try{
-        const { data } = await axios.get(`/admin/mapel/${id}/detail`)
+        const { data } = await instanceAdmin({
+            url: `/admin/mapel/${id}/detail`,
+            method: 'GET',
+        })
 
         payload.id = id
         payload.kode = data.data.kode
@@ -186,8 +203,10 @@ const closeModalDelete = () => {
 const deleteData = async () => {
     isLoadingModalDelete.value = true
     try{
-
-        const { data } = await axios.delete(`/admin/mapel/${payload.id}/delete`, payload)
+        const { data } = await instanceAdmin({
+            url: `/admin/mapel/${payload.id}/delete`,
+            method: 'DELETE',
+        })
         fetchData()
         closeModalDelete()
     }catch(e) {

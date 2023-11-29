@@ -17,7 +17,10 @@ const mediaVideo = ref()
 
 const getOptKelas = async () => {
     try{
-        const { data } = await axios.get(`/opt/kelas`)
+        const { data } = await instanceAdmin({
+            url: `/opt/kelas`,
+            method: 'GET',
+        })
         optKelas.value = data.data
     }catch(e) {
         if(e.response.status == 401) {
@@ -35,7 +38,10 @@ const getOptKelas = async () => {
 
 const getOptMapel = async () => {
     try{
-        const { data } = await axios.get(`/opt/mapel`)
+        const { data } = await instanceAdmin({
+            url: `/opt/mapel`,
+            method: 'GET',
+        })
         optMapel.value = data.data
     }catch(e) {
         if(e.response.status == 401) {
@@ -53,7 +59,11 @@ const getOptMapel = async () => {
 
 const getOptRombel = async () => {
     try{
-        const { data } = await axios.get(`/opt/mapel`)
+        const { data } = await instanceAdmin({
+            url: `/opt/rombel`,
+            method: 'GET',
+        })
+
         optRombel.value = data.data
     }catch(e) {
         if(e.response.status == 401) {
@@ -71,7 +81,11 @@ const getOptRombel = async () => {
 
 const getOptGuru = async () => {
     try{
-        const { data } = await axios.get(`/opt/guru`)
+        const { data } = await instanceAdmin({
+            url: `/opt/guru`,
+            method: 'GET',
+        })
+
         optGuru.value = data.data
     }catch(e) {
         if(e.response.status == 401) {
@@ -236,11 +250,15 @@ const storeData = async () => {
             dataPayload.append("media_video", mediaVideo.value.files[0]);
         }
 
-        let { data } = await axios.post('/admin/materi', dataPayload, {
+        const { data } = await instanceAdmin({
+            url: `/admin/materi`,
+            method: 'POST',
             headers: {
                 "Content-Type": "multipart/form-data"
-            }
+            },
+            data: dataPayload,
         })
+
         notify({
             text: "Berhasil tambah materi",
             type: 'success',
@@ -302,21 +320,29 @@ onMounted(() => {
                     </div>
 
                     <div class="mb-6 w-1/3">
+                        <label for="guru" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Guru Pengampu</label>
+                        <select id="guru" v-model="payload.id_guru" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option value="">Pilih Guru</option>
+                            <option v-for="(item, i) in optGuru" :key="i" :value="item.id">{{ item.text }}</option>
+                        </select>
+                    </div>
+
+                    <!-- <div class="mb-6 w-1/3">
                         <label for="rombel" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rombel</label>
                         <select id="rombel" v-model="payload.id_rombel" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="">Pilih Rombel</option>
                             <option v-for="(item, i) in optRombel" :key="i" :value="item.id">{{ item.text }}</option>
                         </select>
-                    </div>
+                    </div> -->
                 </div>
 
-                <div class="mb-6 w-full">
+                <!-- <div class="mb-6 w-full">
                     <label for="guru" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Guru Pengampu</label>
                     <select id="guru" v-model="payload.id_guru" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option value="">Pilih Guru</option>
                         <option v-for="(item, i) in optGuru" :key="i" :value="item.id">{{ item.text }}</option>
                     </select>
-                </div>
+                </div> -->
 
                 <div class="mb-6 w-full">
                     <label for="judul" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Judul / Nama Materi</label>

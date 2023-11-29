@@ -32,8 +32,9 @@ const onLoginHandler = async () => {
             client_secret: clientSecret,
         });
 
-        router.push({ path: "/admin" })
+        // router.push({ path: "/admin" })
         loading.value = false
+        location.reload()
     } catch (error) {
         loading.value = false
         if (error.status === 403) {

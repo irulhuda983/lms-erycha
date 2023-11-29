@@ -17,4 +17,23 @@ class SoalItem extends Model
     {
         return $this->belongsTo(Soal::class, 'id_soal');
     }
+
+    public function scopeIsPg($query)
+    {
+        return $query->where('jenis_soal', 'pg');
+    }
+
+    public function scopeIsEssay($query)
+    {
+        return $query->where('jenis_soal', 'essay');
+    }
+
+    public function scopeSearch($query, $search)
+    {
+        if($search) {
+            $query->where('text_soal', 'like', '%'.$search.'%');
+        }
+
+        return $query;
+    }
 }

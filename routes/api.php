@@ -12,7 +12,13 @@ use App\Http\Controllers\ADMIN\GuruController;
 use App\Http\Controllers\ADMIN\SiswaController;
 use App\Http\Controllers\ADMIN\MateriController;
 use App\Http\Controllers\ADMIN\SoalController;
+use App\Http\Controllers\ADMIN\SoalItemController;
+use App\Http\Controllers\ADMIN\UjianController;
 use App\Http\Controllers\ADMIN\OptController;
+
+use App\Http\Controllers\SISWA\AuthController as SiswaAuthController;
+use App\Http\Controllers\SISWA\MateriController as SiswaMateriController;
+use App\Http\Controllers\SISWA\UjianController as SiswaUjianController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +30,45 @@ use App\Http\Controllers\ADMIN\OptController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+// controller siswa
+Route::prefix('peserta')->group(function() {
+    Route::prefix('account')->group(function() {
+        Route::post('issue-token', [SiswaAuthController::class, 'issueTokenPeserta']);
+        Route::get('profil', [SiswaAuthController::class, 'getMe'])->middleware(['auth:api']);
+        Route::post('refresh-token', [SiswaAuthController::class, 'refreshToken']);
+        Route::post('/logout', [SiswaAuthController::class, 'logout'])->middleware(['auth:api']);
+    });
+
+    Route::prefix('materi')
+    ->controller(SiswaMateriController::class)
+    ->middleware(['auth:api', 'role:admin|guru|siswa'])
+    ->group(function() {
+        Route::get('', 'index');
+        Route::get('{materi}/detail', 'show');
+    });
+
+    Route::prefix('ujian')
+    ->controller(SiswaUjianController::class)
+    ->middleware(['auth:api', 'role:admin|guru|siswa'])
+    ->group(function() {
+        Route::get('', 'index');
+        Route::get('/hasil', 'getHasil');
+        Route::get('{ujian}/detail', 'show');
+        Route::post('{ujian}/mulai', 'mulaiUjian');
+    });
+
+    Route::prefix('tes')
+    ->controller(SiswaUjianController::class)
+    ->middleware(['auth:api', 'role:admin|guru|siswa'])
+    ->group(function() {
+        Route::post('{ujian}/mulai', 'mulaiUjian');
+        Route::post('{soal}/get-soal-item', 'getSoal');
+        Route::post('{ujianSiswa}/get-jawaban', 'getJawaban');
+        Route::post('{ujianSiswa}/jawab-soal', 'jawabSoal');
+        Route::post('{ujianSiswa}/selesai', 'selesaiTes');
+    });
+});
 
 
 // controller admin
@@ -37,7 +82,7 @@ Route::prefix('admin')->group(function() {
 
     Route::prefix('kelas')
     ->controller(KelasController::class)
-    ->middleware(['auth:api', 'role:admin'])
+    ->middleware(['auth:api', 'role:admin|guru'])
     ->group(function() {
         Route::get('', 'index');
         Route::get('{kelas}/detail', 'show');
@@ -48,7 +93,7 @@ Route::prefix('admin')->group(function() {
 
     Route::prefix('rombel')
     ->controller(RombelController::class)
-    ->middleware(['auth:api', 'role:admin'])
+    ->middleware(['auth:api', 'role:admin|guru'])
     ->group(function() {
         Route::get('', 'index');
         Route::get('{rombel}/detail', 'show');
@@ -59,7 +104,7 @@ Route::prefix('admin')->group(function() {
 
     Route::prefix('mapel')
     ->controller(MapelController::class)
-    ->middleware(['auth:api', 'role:admin'])
+    ->middleware(['auth:api', 'role:admin|guru'])
     ->group(function() {
         Route::get('', 'index');
         Route::get('{mapel}/detail', 'show');
@@ -70,7 +115,7 @@ Route::prefix('admin')->group(function() {
 
     Route::prefix('guru')
     ->controller(GuruController::class)
-    ->middleware(['auth:api', 'role:admin'])
+    ->middleware(['auth:api', 'role:admin|guru'])
     ->group(function() {
         Route::get('', 'index');
         Route::get('{guru}/detail', 'show');
@@ -81,7 +126,7 @@ Route::prefix('admin')->group(function() {
 
     Route::prefix('siswa')
     ->controller(SiswaController::class)
-    ->middleware(['auth:api', 'role:admin'])
+    ->middleware(['auth:api', 'role:admin|guru'])
     ->group(function() {
         Route::get('', 'index');
         Route::get('{siswa}/detail', 'show');
@@ -110,6 +155,30 @@ Route::prefix('admin')->group(function() {
         Route::post('', 'store');
         Route::post('{soal}/update', 'update');
         Route::delete('{soal}/delete', 'destroy');
+    });
+
+    Route::prefix('soal-item')
+    ->controller(SoalItemController::class)
+    ->middleware(['auth:api', 'role:admin|guru'])
+    ->group(function() {
+        Route::get('list-soal', 'index');
+        Route::get('get-single-item', 'getSingleItem');
+        Route::get('{soalItem}/detail', 'show');
+        Route::post('', 'storeOrUpdate');
+        Route::delete('{soalItem}/delete', 'destroy');
+    });
+
+    Route::prefix('ujian')
+    ->controller(UjianController::class)
+    ->middleware(['auth:api', 'role:admin|guru'])
+    ->group(function() {
+        Route::get('', 'index');
+        Route::get('{ujian}/detail', 'show');
+        Route::post('', 'store');
+        Route::post('{ujian}/update', 'update');
+        Route::post('{ujian}/activate', 'activate');
+        Route::post('{ujian}/deactivate', 'deactivate');
+        Route::delete('{ujian}/delete', 'destroy');
     });
 
 });
