@@ -99,7 +99,7 @@ const togglePasswordInputVisibility = () => {
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 h-8 lg:w-16 lg:h-16 fill-current lg:mb-5 mr-5 lg:mr-0">
                                 <path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path>
                             </svg>
-                            <h1 class="font-semibold text-xl lg:text-3xl">DMS LMS</h1>
+                            <h1 class="font-semibold text-xl lg:text-3xl">DMC LMS</h1>
                         </div>
                         <span class="text-[14px]">Learning Management System</span>
                         <!-- <button class="hidden" id="register">Sign Up</button> -->

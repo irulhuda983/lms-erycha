@@ -54,7 +54,10 @@ const errors = reactive({
 
 const getOptKelas = async () => {
     try{
-        const { data } = await axios.get(`/opt/kelas`)
+        const { data } = await instanceAdmin({
+            url: `/opt/kelas`,
+            method: 'GET',
+        })
         optKelas.value = data.data
     }catch(e) {
         if(e.response.status == 401) {
@@ -72,7 +75,10 @@ const getOptKelas = async () => {
 
 const getOptMapel = async () => {
     try{
-        const { data } = await axios.get(`/opt/mapel`)
+        const { data } = await instanceAdmin({
+            url: `/opt/mapel`,
+            method: 'GET',
+        })
         optMapel.value = data.data
     }catch(e) {
         if(e.response.status == 401) {
@@ -90,7 +96,10 @@ const getOptMapel = async () => {
 
 const getOptRombel = async () => {
     try{
-        const { data } = await axios.get(`/opt/rombel`)
+        const { data } = await instanceAdmin({
+            url: `/opt/rombel`,
+            method: 'GET',
+        })
         optRombel.value = data.data
     }catch(e) {
         if(e.response.status == 401) {
@@ -108,7 +117,10 @@ const getOptRombel = async () => {
 
 const getOptGuru = async () => {
     try{
-        const { data } = await axios.get(`/opt/guru`)
+        const { data } = await instanceAdmin({
+            url: `/opt/guru`,
+            method: 'GET',
+        })
         optGuru.value = data.data
     }catch(e) {
         if(e.response.status == 401) {

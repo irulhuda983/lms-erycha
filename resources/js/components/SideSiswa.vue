@@ -22,7 +22,7 @@ const route = useRoute()
                     </svg>
                 </p>
             </div>
-            <div class="font-medium text-white text-[18px]">DMS LMS App.</div>
+            <div class="font-medium text-white text-[18px]">DMC LMS App.</div>
         </div>
         <!-- end logo -->
 

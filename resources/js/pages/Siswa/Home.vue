@@ -54,6 +54,10 @@ const fetchNilaiTertinggi = async () => {
     }
 }
 
+const limitCar = (string = '', limit = 0) => {
+    return string.substring(0, limit)
+}
+
 onMounted(() => {
     cekIsRun()
 })
@@ -71,7 +75,7 @@ onMounted(() => {
                 <div class="w-full box-border grid grid-cols-2 grid-rows-2 gap-4">
                     <div v-for="(item, i) in popularMateri" :key="i" class="w-full h-[150px] rounded-[20px] box-border p-4" :class="bgList[i]">
                         <div class="rounded-full bg-white w-10 h-10 flex items-center justify-center mb-3">BHS</div>
-                        <div class="text-gray-800 font-semibold text-base mb-1">{{ item.judul }}</div>
+                        <div class="text-gray-800 font-semibold text-base mb-1">{{ limitCar(item.judul, 18) }}</div>
                         <div class="w-full bg-white/50 box-border p-2 text-[10px] font-medium rounded-[7px] backdrop-blur-md">{{ item.jumlah_dibaca }} Kali Dibaca</div>
                     </div>
                 </div>
