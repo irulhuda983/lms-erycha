@@ -47,9 +47,9 @@ const fetchData = async () => {
             params: params,
         })
         let items = data.data
-        let filter = items.filter((item) => { item.ujianSiswa == 0 })
+        let filter = items.filter((item) => { return item.ujianSiswa == 0 })
         console.log(filter)
-        dataset.value = filter
+        dataset.value = items
         pageInfo.value = data.meta
     }catch(e) {
         if(e.response.status == 401) {
