@@ -141,12 +141,13 @@ onMounted(() => {
             </div>
 
             <div class="w-full p-6 box-border bg-white border-b text-gray-600 bg-white">
-                <div v-if="soalPg.length != 0" class="w-full mb-10">
+                <div class="w-full mb-10">
                     <div class="w-full flex justify-between items-center mb-5">
                         <div class="font-semibold mb-0 lg:mb-2">I. Pilihan Ganda</div>
                         <a href="#" @click.prevent="router.push({ name: 'listPgSoal', params: {id: route.params.id} })" class="block rounded px-3 py-2 border text-xs text-gray-600 font-semibold hover:border-indigo-500 hover:bg-indigo-500 hover:text-white">Edit Pilihan Ganda</a>
                     </div>
 
+                    <template v-if="soalPg.length != 0">
                     <div v-for="(item, i) in soalPg" :key="i" class="w-full flex mb-5">
                         <div class="flex-none w-8">{{ item.no_urut }}.</div>
                         <div class="w-full">
@@ -175,6 +176,7 @@ onMounted(() => {
                             <div class="font-semibold italic">Kunci Jawaban : {{ item.kunci_jawaban }}</div>
                         </div>
                     </div>
+                    </template>
                 </div>
 
                 <div v-if="soalEssay.length != 0" class="w-full">
