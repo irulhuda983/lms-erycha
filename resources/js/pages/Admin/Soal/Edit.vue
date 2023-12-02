@@ -169,9 +169,49 @@ const fetchData = async () => {
     }
 }
 
-const storeData = () => {
-    console.log('ok')
-    router.push({ name: 'detailSoal', params: { id: route.params.id } })
+const storeData = async () => {
+    try{
+        const { data } = await instanceAdmin({
+            url: `/admin/soal/${route.params.id}/update`,
+            method: 'POST',
+            data: payload,
+        })
+        notify({
+            text: "Berhasil ubah soal",
+            type: 'success',
+            duration: 2000
+        })
+        router.push({ name: 'detailSoal', params : { id: route.params.id } })
+    }catch(e) {
+        if(e.response.status == 401) {
+            localStorage.removeItem('TOKEN')
+            location.reload()
+        }else if(e.response.status == 422) {
+            const err = e.response.data.errors
+            errors.id_mapel = err.id_mapel ? err.id_mapel[0] : null
+            errors.id_guru = err.id_guru ? err.id_guru[0] : null
+            errors.id_kelas = err.id_kelas ? err.id_kelas[0] : null
+            errors.id_rombel = err.id_rombel ? err.id_rombel[0] : null
+            errors.tipe_mapel_soal = err.tipe_mapel_soal ? err.tipe_mapel_soal[0] : null
+            errors.tipe_soal = err.tipe_soal ? err.tipe_soal[0] : null
+            errors.nama = err.nama ? err.nama[0] : null
+            errors.jml_pg = err.jml_pg ? err.jml_pg[0] : null
+            errors.jml_essay = err.jml_essay ? err.jml_essay[0] : null
+            errors.bobot_pg = err.bobot_pg ? err.bobot_pg[0] : null
+            errors.bobot_essay = err.bobot_essay ? err.bobot_essay[0] : null
+            errors.jml_pil_essay = err.jml_pil_essay ? err.jml_pil_essay[0] : null
+            errors.kkm = err.kkm ? err.kkm[0] : null
+            errors.is_agama = err.is_agama ? err.is_agama[0] : null
+        }else {
+            notify({
+                text: "Faliled to add, Server is Maintenent",
+                type: 'error',
+                duration: 2000
+            })
+        }
+    }finally {
+        isLoading.value = false
+    }
 }
 
 onMounted(() => {
@@ -292,7 +332,6 @@ onMounted(() => {
                             :class="errors.is_agama ? 'border-red-400':'border-gray-300'"
                             @focus="errors.is_agama = null"
                         >
-                            <option :value="0">Pilih</option>
                             <option :value="1">Ya</option>
                             <option :value="0">Tidak</option>
                         </select>

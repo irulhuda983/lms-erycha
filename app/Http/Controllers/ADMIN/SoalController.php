@@ -152,7 +152,7 @@ class SoalController extends Controller
                 'jml_pil_pg' => $request->jml_pil_pg,
                 'kkm' => $request->kkm,
                 'is_agama' => $request->is_agama,
-                'is_active' => $request->is_active,
+                'is_active' => 1,
             ]);
 
             DB::commit();

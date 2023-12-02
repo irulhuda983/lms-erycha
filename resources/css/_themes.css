@@ -32,6 +32,25 @@ body {
     animation: swipe 1s;
 }
 
+.spin-invinite {
+    animation: spin 4s linear infinite;
+}
+
+.show-hide-animation {
+    animation: showHide 4s linear infinite;
+}
+
+@keyframes spin {
+    0% {transform: rotate(0deg);}                     
+    100% {transform: rotate(360deg);}
+}
+
+@keyframes showHide {
+    0% {opacity: 1;}                  
+    50% {opacity: 0.5;}                  
+    100% {opacity: 1;}
+}
+
 @keyframes swipe {
     0%   {width: 20%;}
     25%  {width: 40%;}

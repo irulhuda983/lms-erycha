@@ -41,7 +41,7 @@ class UjianController extends Controller
     {
         $user = $request->user();
 
-        $query = UjianSiswa::where('id_siswa', $user->pemilik->id)->paginate($request->limit ?? 10);
+        $query = UjianSiswa::where('id_siswa', $user->pemilik->id)->whereNotNull('w_selesai')->paginate($request->limit ?? 10);
 
         return UjianSiswaResource::collection($query);
     }
@@ -53,18 +53,25 @@ class UjianController extends Controller
         try{
             DB::beginTransaction();
 
-            $lamaUjian = $ujian->lama_ujian .' minutes';
+            $cekUjian = UjianSiswa::where('id_ujian', $ujian->id)->where('id_siswa', $user->pemilik->id)->first();
 
-            $ujianSiswa = UjianSiswa::create([
-                'id_ujian' => $ujian->id,
-                'id_siswa' => $user->pemilik->id,
-                'w_mulai' => Carbon::now('Asia/Jakarta'),
-                'max_time' => Carbon::now('Asia/Jakarta')->add($lamaUjian),
-            ]);
+            if(!$cekUjian) {
+                $lamaUjian = $ujian->lama_ujian .' minutes';
+
+                $ujianSiswa = UjianSiswa::create([
+                    'id_ujian' => $ujian->id,
+                    'id_siswa' => $user->pemilik->id,
+                    'w_mulai' => Carbon::now('Asia/Jakarta'),
+                    'max_time' => Carbon::now('Asia/Jakarta')->add($lamaUjian),
+                ]);
+
+                DB::commit();
+
+                return response()->json(['success' => true, 'message' => 'success', 'data' => new UjianSiswaResource($ujianSiswa)], 200);
+            }
 
             DB::commit();
-
-            return response()->json(['success' => true, 'message' => 'success', 'data' => new UjianSiswaResource($ujianSiswa)], 200);
+            return response()->json(['success' => true, 'message' => 'success', 'data' => new UjianSiswaResource($cekUjian)], 200);
         }catch(\Exception $e) {
             Log::error($e->getMessage());
             DB::rollBack();

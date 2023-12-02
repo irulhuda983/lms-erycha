@@ -16,21 +16,29 @@ class UjianResource extends JsonResource
     {
         $user = $request->user();
 
-        $ujianSiswa = $this->ujianSiswa->first( function($item) use ($user) { return $item->id_siswa == $user->pemilik->id; }) ? 1 : 0;
+        $ujianSiswa = $this->ujianSiswa->first( function($item) use ($user) { return $item->id_siswa == $user->pemilik->id; });
 
         $status = null;
 
         if( date('Y-m-d H:i:s') > date('Y-m-d H:i:s', strtotime($this->waktu_mulai)) && date('Y-m-d H:i:s') < date('Y-m-d H:i:s', strtotime($this->w_akhir)) ) {
-            if($ujianSiswa == 1) {
-                $status = 'sudah_mengerjakan';
+            if($user->role == 'siswa') {
+                if($ujianSiswa) {
+                    if($ujianSiswa->w_selesai == null) {
+                        $status = 'sedang_mengerjakan';
+                    }else{
+                        $status = 'sudah_mengerjakan';
+                    }
+                }else{
+                    $status = 'mulai_kerjakan';
+                }
             }else{
-                $status = 'mulai_kerjakan';
+                $status = 'sedang_berlangsung';
             }
         }else {
             if( date('Y-m-d H:i:s') < date('Y-m-d H:i:s', strtotime($this->waktu_mulai)) ) {
                 $status = 'belum_dimulai';
             }else{
-                $status = 'kadaluarsa';
+                $status = 'selesai';
             }
         }
 
@@ -53,8 +61,9 @@ class UjianResource extends JsonResource
             'nama' => $this->nama,
             'lama_ujian' => $this->lama_ujian,
             'waktu_mulai' => date('Y-m-d H:i:s', strtotime($this->waktu_mulai)),
-            'waktu_mulai_view' => date('d/m/Y H:i:s', strtotime($this->waktu_mulai)),
+            'waktu_mulai_view' => date('d/m/Y H:i', strtotime($this->waktu_mulai)),
             'w_akhir' => date('Y-m-d H:i:s', strtotime($this->w_akhir)),
+            'w_akhir_view' => date('d/m/Y H:i', strtotime($this->w_akhir)),
             'last_token' => $this->last_token,
             'is_active' => $this->is_active,
             'is_hasil' => $this->is_hasil,
@@ -64,7 +73,11 @@ class UjianResource extends JsonResource
         ];
 
         if($user->role == 'siswa') {
-            $data['ujianSiswa'] = $ujianSiswa;
+            $data['ujianSiswa'] = $ujianSiswa ? ($ujianSiswa->w_selesai ? 1 : 0) : 0;
+        }
+
+        if($user->role != 'siswa') {
+            $data['dataSoal'] = $this->soal ? new SoalResource($this->soal) : null;
         }
 
         return $data;

@@ -86,9 +86,19 @@ const togglePasswordInputVisibility = () => {
             </div>
             <div class="w-full lg:w-1/2 flex items-center justify-center p-8 lg:p-0">
                 <div class="w-[480px] 2xl:w-[720px]">
+                    <div class="text-[#0086DC] w-full h-full flex items-center justify-center flex-col box-border px-[30px] text-center mb-10">
+                        <div class="flex items-center justify-center mb-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 h-8 lg:w-16 lg:h-16 fill-current mr-3">
+                                <path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"></path>
+                            </svg>
+                            <h1 class="font-semibold text-xl lg:text-3xl">DMC LMS</h1>
+                        </div>
+                        <span class="text-[14px]">Learning Management System</span>
+                    </div>
+
                     <div class="mb-10">
                         <div class="text-[#0086DC] font-bold text-2xl">Login</div>
-                        <div class="text-[#8D8D8D]">Silahkan Login Menggunakan Username/NRP dan Password Anda!</div>
+                        <div class="text-[#8D8D8D]">Silahkan Login Menggunakan Username dan Password Anda!</div>
                     </div>
 
                     <div v-if="flashError" class="mb-6 rounded bg-red-200 text-red-600 font-bold box-border p-4 text-xs">

@@ -33,7 +33,7 @@ const routes = [
             },
             {
                 meta: { title: "Materi", menu: 'siswaMateri'},
-                path: "/materi/:id/params",
+                path: "/materi/:id/detail",
                 name: "siswaDetailMateri",
                 component: () => import('@/pages/Siswa/DetailMateri.vue'),
             },
@@ -178,6 +178,12 @@ const routes = [
                 path: "/admin/ujian/add",
                 name: "addUjian",
                 component: () => import('@/pages/Admin/Ujian/Add.vue'),
+            },
+            {
+                meta: { title: "Detail Ujian", menu: 'ujian', admin: true },
+                path: "/admin/ujian/:id/detail",
+                name: "detailUjian",
+                component: () => import('@/pages/Admin/Ujian/Detail.vue'),
             },
 
             // user

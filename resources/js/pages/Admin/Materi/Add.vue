@@ -360,7 +360,7 @@ onMounted(() => {
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Media Image</label>
                         
                         <div class="flex items-center justify-center w-full">
-                            <label for="media-image" class="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50" :class="errors.media_image ? 'border-red-300':'border-gray-300'">
+                            <label for="media-image" class="flex flex-col items-center justify-center box-border w-full h-64 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50 overflow-hidden" :class="errors.media_image ? 'border-red-300':'border-gray-300'">
                                 <div v-if="payload.media_image">
                                     <img
                                         :src="payload.media_image"

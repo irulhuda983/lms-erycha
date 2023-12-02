@@ -137,15 +137,6 @@ const getOptGuru = async () => {
 }
 
 const storeData = async () => {
-    if(errors.media_file || errors.media_image || errors.media_video) {
-        notify({
-            text: "Anda memiliki input yang tidak sesuai, silahkan cek kembali input anda",
-            type: 'error',
-            duration: 2000
-        })
-        return
-    }
-        isLoading.value = true
     try{
         const { data } = await instanceAdmin({
             url: `/admin/soal`,

@@ -38,7 +38,11 @@ const fetchPopularmateri = async () => {
         const sorted = items.sort((a, b) => b.jumlah_dibaca - a.jumlah_dibaca);
         popularMateri.value = sorted.slice(0,4)
     }catch(e){
-        console.log(e)
+        if(e.response.status == 401) {
+            localStorage.removeItem('TOKENSISWA')
+            localStorage.removeItem('USERSISWA')
+            location.reload()
+        }
     }
 }
 
@@ -51,7 +55,11 @@ const fetchNilaiTertinggi = async () => {
         
         nilaiTertinggi.value = data.data
     }catch(e){
-        console.log(e)
+        if(e.response.status == 401) {
+            localStorage.removeItem('TOKENSISWA')
+            localStorage.removeItem('USERSISWA')
+            location.reload()
+        }
     }
 }
 
@@ -109,7 +117,7 @@ onMounted(() => {
                                 <!-- <td>3522022611960003</td> -->
                                 <td class="px-2 py-3 border-b">
                                     <div>{{ item.siswa.nama }}</div>
-                                    <div class="text-[8px] text-gray-500">{{ item.siswa.nik ?? 'w81932' }}</div>
+                                    <div class="text-[8px] text-gray-500">{{ item.siswa.nik ?? '-' }}</div>
                                 </td>
                                 <td class="px-2 py-3 border-b font-semibold w-[20px] text-end">{{ item.total }}</td>
                             </tr>

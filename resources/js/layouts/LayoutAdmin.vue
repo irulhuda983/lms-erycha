@@ -12,7 +12,8 @@ import Sidebar from "@/components/SideAdmin.vue"
             <Navbar />
         </div>
         <div class="w-full box-border overflow-hidden flex" style="height: calc(100vh - 72px)">
-            <div class="hidden lg:block w-48 flex-none">
+            <!-- w-48 -->
+            <div class="flex-none">
                 <Sidebar />
             </div>
 

@@ -47,9 +47,14 @@ const getSoal = async () => {
             {id: 'D', opt: 'D', text: soal.pil_d},
         ]
     }catch(e) {
-        // if(e.response.status == 404) {
-        //     console.log(e.response.status)
-        // }
+        if(e.response.status == 401) {
+            localStorage.removeItem('TOKENSISWA')
+            localStorage.removeItem('USERSISWA')
+
+            tesStore.setRunningTest(null)
+            tesStore.setDataTest(null)
+            location.reload()
+        }
         soalTes.value = null
     }
 }

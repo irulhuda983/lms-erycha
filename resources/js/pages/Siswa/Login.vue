@@ -17,7 +17,8 @@ const eyeVisible = ref(true)
 const passwordType = ref('password')
 const errors = reactive({
     username: null,
-    password: null
+    password: null,
+    login: null,
 })
 const flashError = ref(false)
 
@@ -35,25 +36,29 @@ const onLoginHandler = async () => {
         location.reload()
     } catch (error) {
         if (error.status === 403) {
-            notify({
-                text: "Username atau password salah",
-                type: 'error',
-                duration: 2000
-            })
+            errors.login = 'Username atau password yang anda masukkan tidak sesuai.'
+            // notify({
+            //     text: "Username atau password salah",
+            //     type: 'error',
+            //     duration: 2000
+            // })
             flashError.value = true
         }else if(error.status == 422){
             let err = error.data.errors
-            console.log(error.data)
 
             errors.username = err.username ? err.username[0] : null
             errors.password = err.password ? err.password[0] : null
+        }else if(error.status == 400){
+            errors.login = 'Username atau password yang anda masukkan tidak sesuai.'
+            // errors.login = 'Akun anda sudah login di perangkat lain, hubungi administrator untuk mereset login anda.'
         }else{
+            errors.login = 'Username atau password yang anda masukkan tidak sesuai.'
             flashError.value = true
-            notify({
-                text: "Username atau password salah",
-                type: 'error',
-                duration: 2000
-            })
+            // notify({
+            //     text: "Username atau password salah",
+            //     type: 'error',
+            //     duration: 2000
+            // })
         }
         loading.value = false
     }
@@ -73,6 +78,15 @@ const togglePasswordInputVisibility = () => {
                 <form method="post" @submit.prevent="onLoginHandler" class="w-full bg-white flex items-center justify-center flex-col px-[30px] h-full box-border">
                     <h1 class="font-bold text-3xl lg:text-5xl mb-5">Sign In</h1>
                     <span class="text-[12px] mb-3 text-center">Silahkan Login Menggunakan Username dan Password Anda.</span>
+
+                    <div v-if="errors.login" class="w-full rounded bg-red-300 text-red-600 box-border mb-3 p-3 relative">
+                        <div class="font-medium" style="font-size: 10px; line-height: 16px;">{{ errors.login }}</div>
+
+                        <svg @click.prevent="errors.login = null" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="cursor-pointer w-6 h-6 absolute right-1 top-2 hover:text-red-400">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+
                     <div class="w-full my-[8px]">
                         <input @focus="errors.username = null" type="text" v-model="username" placeholder="Username" class="bg-[#eee] border-none px-[15px] py-[10px] text-[13px] w-full outline-none rounded-[8px]">
                         <div class="text-red-500 text-[10px] italic">{{ errors.username }}</div>

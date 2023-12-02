@@ -1,0 +1,1 @@
+import{_ as e}from"./_plugin-vue_export-helper-c27b6911.js";import{o,c}from"./app-cf61ecef.js";const r={},t={class:"w-full"};function s(n,_){return o(),c("div",t," lorem5000 ")}const l=e(r,[["render",s]]);export{l as default};
