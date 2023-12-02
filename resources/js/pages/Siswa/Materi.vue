@@ -89,13 +89,14 @@ onMounted(() => {
                 v-for="(item, i) in dataset" :key="i"
                 :to="{ name: 'siswaDetailMateri', params: { id: item.id} }"
             >
-                <div class="w-full h-[160px] box-border overflow-hidden">
-                    <img :src="MateriImg" alt="" class="w-full object-cover">
+                <div class="w-full h-[160px] box-border overflow-hidden flex items-center justify-center">
+                    <img :src="item.media_image ?? MateriImg " alt="" class="w-full object-cover">
                 </div>
 
                 <div class="w-full p-3 box-border">
                     <p class="text-[10px] text-[#424242] mb-[8px] uppercase">{{ item.mapel }}</p>
-                    <p class="text-[#222222] text-[16px] font-semibold">{{ item.excerpt }}</p>
+                    <p class="text-[#222222] text-[12px] lg:text-[16px] font-semibold mb-2">{{ item.judul }}</p>
+                    <p class="text-[#222222] text-[10px]">{{ item.excerpt }}</p>
                     <p class="absolute bottom-4 text-[#6D6D6D] text-[12px]">{{ item.created_at }}</p>
                 </div>
             </router-link>
