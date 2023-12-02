@@ -1,6 +1,7 @@
 <script setup>
 import { ref, defineAsyncComponent, reactive, onMounted, watch } from 'vue'
 import MateriIcon from '@/assets/img/materi_icon.png'
+import LmsIcon from '@/assets/img/lms_icon.jpg'
 import BannerHome from '@/components/BannerHome.vue'
 import { useTesStore } from "@/stores/tes"
 import { useRouter } from 'vue-router'
@@ -74,9 +75,11 @@ onMounted(() => {
             <div class="lg:w-2/5 h-full box-border overflow-hidden">
                 <div class="w-full box-border grid grid-cols-2 grid-rows-2 gap-4">
                     <div v-for="(item, i) in popularMateri" :key="i" class="w-full h-[150px] rounded-[20px] box-border p-4" :class="bgList[i]">
-                        <div class="rounded-full bg-white w-10 h-10 flex items-center justify-center mb-3">BHS</div>
-                        <div class="text-gray-800 font-semibold text-base mb-1">{{ limitCar(item.judul, 18) }}</div>
-                        <div class="w-full bg-white/50 box-border p-2 text-[10px] font-medium rounded-[7px] backdrop-blur-md">{{ item.jumlah_dibaca }} Kali Dibaca</div>
+                        <div class="rounded-full bg-white w-10 h-10 flex items-center justify-center mb-3 overflow-hidden">
+                            <img :src="LmsIcon" alt="" class="w-6">
+                        </div>
+                        <div class="text-gray-800 font-semibold text-sm lg:text-base mb-1">{{ limitCar(item.judul, 18) }}</div>
+                        <div class="w-full bg-white/50 box-border px-2 py-1 lg:px-2 py-2 text-[10px] font-medium rounded-[7px] backdrop-blur-md">{{ item.jumlah_dibaca }} Kali Dibaca</div>
                     </div>
                 </div>
             </div>
@@ -111,6 +114,13 @@ onMounted(() => {
                                 <td class="px-2 py-3 border-b font-semibold w-[20px] text-end">{{ item.total }}</td>
                             </tr>
                         </tbody>
+                        <tbody v-else>
+                            <tr>
+                               <td class="px-2 py-3 border-b text-center italic" colspan="3">
+                                    Belum ada hasil ujian
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -131,6 +141,9 @@ onMounted(() => {
                             <p class="text-[12px]">{{ item.excerpt }}</p>
                         </div>
                     </div>
+                </div>
+                <div v-else class="w-full box-border flex items-center justify-center h-full w-full">
+                    <p class="text-center italic">Belum Ada materi</p>
                 </div>
             </div>
 

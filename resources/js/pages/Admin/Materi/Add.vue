@@ -4,8 +4,8 @@ import { useRouter } from 'vue-router'
 import loader from '@/assets/gif/loader.gif'
 import { useNotification } from "@kyvg/vue3-notification"
 
-const router = useRouter()
 const { notify } = useNotification()
+const router = useRouter()
 const optKelas = ref([])
 const optMapel = ref([])
 const optRombel = ref([])
