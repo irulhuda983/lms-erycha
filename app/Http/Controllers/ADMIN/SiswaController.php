@@ -188,4 +188,69 @@ class SiswaController extends Controller
         }
     }
 
+    public function generateFromFile(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:pdf,xlx,csv,json|max:2048',
+        ]);
+
+        $fp = fopen($request->file, 'r');
+        $headers = fgetcsv($fp); // Get column headers
+        
+        $data = array();
+        while (($row = fgetcsv($fp)) !== false) {
+            $data[] = array_combine($headers, $row);
+        }
+        fclose($fp);
+        
+        $json = json_encode($data, JSON_PRETTY_PRINT);
+        $data = json_decode($json, true);
+
+        // return $data;
+
+        // $file = file_get_contents($request->file);
+        // $data = json_decode($file);
+
+        try{
+            DB::beginTransaction();
+            
+            foreach($data as $item) {
+                $siswa = Siswa::create([
+                    'id_kelas' => (int) $item['id_kelas'],
+                    'id_rombel' => null,
+                    'nama' => $item['nama'],
+                    'nik' => null,
+                    'no_peserta' => null,
+                    'nisn' => null,
+                    'gender' => $item['gender'],
+                    'tempat_lahir' => null,
+                    'tgl_lahir' => null,
+                    'alamat' => $item['alamat'],
+                    'rt' => null,
+                    'rw' => null,
+                    'desa' => null,
+                    'kec' => null,
+                    'kab' => null,
+                    'prov' => null,
+                    'foto' => null,
+                ]);
+    
+                $siswa->auth()->create([
+                    'nama' => $item['nama'],  
+                    'username' => $item['username'],  
+                    'password' => Hash::make($item['password']),  
+                    'password_view' => $item['password'],  
+                ]);
+            }
+
+            DB::commit();
+
+            return response()->json(['success' => true, 'message' => 'success'], 200);
+        }catch(\Exception $e){
+          // Log::error($e->getMessage());
+          DB::rollBack();
+          return response()->json(['error' => $e->getMessage()], 400);
+        }
+    }
+
 }

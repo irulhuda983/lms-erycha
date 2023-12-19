@@ -141,6 +141,7 @@ Route::prefix('admin')->group(function() {
         Route::get('', 'index');
         Route::get('{siswa}/detail', 'show');
         Route::post('', 'store');
+        Route::post('/generate-from-file', 'generateFromFile');
         Route::post('{siswa}/update', 'update');
         Route::delete('{siswa}/delete', 'destroy');
     });
