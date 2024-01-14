@@ -185,6 +185,13 @@ const routes = [
                 name: "detailUjian",
                 component: () => import('@/pages/Admin/Ujian/Detail.vue'),
             },
+            {
+                meta: { title: "Hasil Ujian", menu: 'ujian', admin: true },
+                path: "/admin/ujian/:id/hasil",
+                name: "hasilUjian",
+                component: () => import('@/pages/Admin/Ujian/Hasil.vue'),
+            },
+            // end ujian
 
             // user
             {

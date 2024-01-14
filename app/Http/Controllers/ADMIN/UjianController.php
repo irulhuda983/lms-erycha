@@ -13,7 +13,9 @@ use Illuminate\Validation\Rule;
 use Carbon\Carbon;
 
 use App\Models\Ujian;
+use App\Models\UjianSiswa;
 use App\Http\Resources\UjianResource;
+use App\Http\Resources\HasilUjianResource;
 
 class UjianController extends Controller
 {
@@ -182,5 +184,20 @@ class UjianController extends Controller
             DB::rollBack();
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
+    }
+
+    // hasil ujian
+    public function hasilUjian(Request $request, Ujian $ujian)
+    {
+        $user = $request->user();
+
+        $query = UjianSiswa::where('id_ujian', $ujian->id)->paginate($request->limit ?? 10);
+
+        return HasilUjianResource::collection($query);
+    }
+
+    public function detailHasilUjian(Ujian $ujian, UjianSiswa $ujianSiswa)
+    {
+        return new HasilUjianResource($ujianSiswa);
     }
 }

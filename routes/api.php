@@ -185,6 +185,8 @@ Route::prefix('admin')->group(function() {
     ->group(function() {
         Route::get('', 'index');
         Route::get('{ujian}/detail', 'show');
+        Route::get('{ujian}/hasil', 'hasilUjian');
+        Route::get('{ujian}/hasil/{ujianSiswa}/detail', 'detailHasilUjian');
         Route::post('', 'store');
         Route::post('{ujian}/update', 'update');
         Route::post('{ujian}/activate', 'activate');

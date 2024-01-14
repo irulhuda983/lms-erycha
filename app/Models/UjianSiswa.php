@@ -18,6 +18,11 @@ class UjianSiswa extends Model
         return $this->belongsTo(Ujian::class, 'id_ujian');
     }
 
+    public function jawaban()
+    {
+        return $this->hasMany(Jawaban::class, 'id_ujian_siswa');
+    }
+
     public function siswa()
     {
         return $this->belongsTo(Siswa::class, 'id_siswa');
