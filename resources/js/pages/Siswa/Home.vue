@@ -52,8 +52,12 @@ const fetchNilaiTertinggi = async () => {
             url: 'peserta/dashboard/nilai-tertinggi',
             method: 'GET',
         })
-        
-        nilaiTertinggi.value = data.data
+
+        const items = data.data
+
+        const sorted = items.sort((a, b) => b.total - a.total);
+        nilaiTertinggi.value = sorted.slice(0,10)
+
     }catch(e){
         if(e.response.status == 401) {
             localStorage.removeItem('TOKENSISWA')

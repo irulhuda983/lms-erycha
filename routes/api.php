@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 
 use App\Http\Controllers\ADMIN\AuthController;
+use App\Http\Controllers\ADMIN\DashboardController;
 use App\Http\Controllers\ADMIN\KelasController;
 use App\Http\Controllers\ADMIN\RombelController;
 use App\Http\Controllers\ADMIN\MapelController;
@@ -88,6 +89,15 @@ Route::prefix('admin')->group(function() {
         Route::get('profil', [AuthController::class, 'getMe'])->middleware(['auth:api', 'role:admin|guru']);
         Route::post('refresh-token', [AuthController::class, 'refreshToken']);
         Route::post('/logout', [AuthController::class, 'logout'])->middleware(['auth:api', 'role:admin|guru']);
+    });
+
+    Route::prefix('dashboard')
+    ->controller(DashboardController::class)
+    ->middleware(['auth:api', 'role:admin|guru'])
+    ->group(function() {
+        Route::get('jumlah', 'getJumlah');
+        Route::get('data-chart', 'getDataChart');
+        Route::get('popular-materi', 'popularMateri');
     });
 
     Route::prefix('kelas')

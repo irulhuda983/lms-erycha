@@ -1,12 +1,12 @@
 {
-  "_Editor-349d73d4.js": {
-    "file": "assets/Editor-349d73d4.js",
+  "_Editor-e2bdecdd.js": {
+    "file": "assets/Editor-e2bdecdd.js",
     "imports": [
       "resources/js/app.js"
     ]
   },
-  "_EyeOffIcon-b66b209e.js": {
-    "file": "assets/EyeOffIcon-b66b209e.js",
+  "_EyeOffIcon-55acf17e.js": {
+    "file": "assets/EyeOffIcon-55acf17e.js",
     "imports": [
       "__plugin-vue_export-helper-c27b6911.js",
       "resources/js/app.js"
@@ -21,8 +21,8 @@
     ],
     "file": "assets/default_user-c0577ea9.js"
   },
-  "_flowbite-vue-2cab183c.js": {
-    "file": "assets/flowbite-vue-2cab183c.js",
+  "_flowbite-vue-a273e6c0.js": {
+    "file": "assets/flowbite-vue-a273e6c0.js",
     "imports": [
       "resources/js/app.js"
     ]
@@ -33,6 +33,12 @@
     ],
     "file": "assets/loader-50bc1437.js"
   },
+  "_materi_icon-9aeec084.js": {
+    "assets": [
+      "assets/materi_icon-9ae1060a.png"
+    ],
+    "file": "assets/materi_icon-9aeec084.js"
+  },
   "node_modules/pdfjs-dist/legacy/web/images/loading-icon.gif": {
     "file": "assets/loading-icon-483c4a03.gif",
     "src": "node_modules/pdfjs-dist/legacy/web/images/loading-icon.gif"
@@ -42,7 +48,7 @@
     "src": "node_modules/pdfjs-dist/legacy/web/images/shadow.png"
   },
   "resources/css/app.css": {
-    "file": "assets/app-b4e9c42a.css",
+    "file": "assets/app-9ebdc493.css",
     "isEntry": true,
     "src": "resources/css/app.css"
   },
@@ -94,7 +100,7 @@
       "resources/js/pages/Admin/User/AddGuru.vue",
       "resources/js/pages/Admin/User/Siswa.vue"
     ],
-    "file": "assets/app-87241906.js",
+    "file": "assets/app-8c9c0969.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   },
@@ -127,7 +133,7 @@
     "src": "resources/js/assets/img/materi_icon.png"
   },
   "resources/js/components/Pagination.vue": {
-    "file": "assets/Pagination-10520386.js",
+    "file": "assets/Pagination-4a1601cd.js",
     "imports": [
       "resources/js/app.js"
     ],
@@ -135,7 +141,7 @@
     "src": "resources/js/components/Pagination.vue"
   },
   "resources/js/layouts/LayoutAdmin.vue": {
-    "file": "assets/LayoutAdmin-822be0fb.js",
+    "file": "assets/LayoutAdmin-3384a49f.js",
     "imports": [
       "resources/js/app.js",
       "_default_user-c0577ea9.js"
@@ -144,7 +150,7 @@
     "src": "resources/js/layouts/LayoutAdmin.vue"
   },
   "resources/js/layouts/LayoutSiswa.vue": {
-    "file": "assets/LayoutSiswa-572a9cf7.js",
+    "file": "assets/LayoutSiswa-7f114fad.js",
     "imports": [
       "resources/js/app.js",
       "_default_user-c0577ea9.js"
@@ -153,10 +159,10 @@
     "src": "resources/js/layouts/LayoutSiswa.vue"
   },
   "resources/js/pages/Admin/Home.vue": {
-    "file": "assets/Home-f0a563f6.js",
+    "file": "assets/Home-cac3cbe0.js",
     "imports": [
-      "__plugin-vue_export-helper-c27b6911.js",
-      "resources/js/app.js"
+      "resources/js/app.js",
+      "_materi_icon-9aeec084.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/pages/Admin/Home.vue"
@@ -165,10 +171,10 @@
     "assets": [
       "assets/lms-b81000f1.svg"
     ],
-    "file": "assets/Login-55e99fcf.js",
+    "file": "assets/Login-7295c686.js",
     "imports": [
       "resources/js/app.js",
-      "_EyeOffIcon-b66b209e.js",
+      "_EyeOffIcon-55acf17e.js",
       "__plugin-vue_export-helper-c27b6911.js"
     ],
     "isDynamicEntry": true,
@@ -178,17 +184,17 @@
     "dynamicImports": [
       "resources/js/components/Pagination.vue"
     ],
-    "file": "assets/Kelas-81b0933d.js",
+    "file": "assets/Kelas-2126d7ec.js",
     "imports": [
       "resources/js/app.js",
-      "_flowbite-vue-2cab183c.js",
+      "_flowbite-vue-a273e6c0.js",
       "_loader-50bc1437.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/pages/Admin/Master/Kelas.vue"
   },
   "resources/js/pages/Admin/Master/Main.vue": {
-    "file": "assets/Main-ec64e72d.js",
+    "file": "assets/Main-1f9da3f5.js",
     "imports": [
       "resources/js/app.js"
     ],
@@ -199,10 +205,10 @@
     "dynamicImports": [
       "resources/js/components/Pagination.vue"
     ],
-    "file": "assets/Mapel-cbb41618.js",
+    "file": "assets/Mapel-798a9173.js",
     "imports": [
       "resources/js/app.js",
-      "_flowbite-vue-2cab183c.js",
+      "_flowbite-vue-a273e6c0.js",
       "_loader-50bc1437.js"
     ],
     "isDynamicEntry": true,
@@ -212,17 +218,17 @@
     "dynamicImports": [
       "resources/js/components/Pagination.vue"
     ],
-    "file": "assets/Rombel-f3ca9430.js",
+    "file": "assets/Rombel-5dea6dd7.js",
     "imports": [
       "resources/js/app.js",
-      "_flowbite-vue-2cab183c.js",
+      "_flowbite-vue-a273e6c0.js",
       "_loader-50bc1437.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/pages/Admin/Master/Rombel.vue"
   },
   "resources/js/pages/Admin/Materi/Add.vue": {
-    "file": "assets/Add-6b7c4f27.js",
+    "file": "assets/Add-d7bc396a.js",
     "imports": [
       "resources/js/app.js",
       "_loader-50bc1437.js"
@@ -231,7 +237,7 @@
     "src": "resources/js/pages/Admin/Materi/Add.vue"
   },
   "resources/js/pages/Admin/Materi/Edit.vue": {
-    "file": "assets/Edit-2c8bbbd4.js",
+    "file": "assets/Edit-1c42a42c.js",
     "imports": [
       "resources/js/app.js",
       "_loader-50bc1437.js"
@@ -243,26 +249,26 @@
     "dynamicImports": [
       "resources/js/components/Pagination.vue"
     ],
-    "file": "assets/Main-99209124.js",
+    "file": "assets/Main-5739995e.js",
     "imports": [
       "resources/js/app.js",
-      "_flowbite-vue-2cab183c.js"
+      "_flowbite-vue-a273e6c0.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/pages/Admin/Materi/Main.vue"
   },
   "resources/js/pages/Admin/Materi/Show.vue": {
-    "file": "assets/Show-3a52a4ee.js",
+    "file": "assets/Show-e093c78a.js",
     "imports": [
       "resources/js/app.js",
       "_loader-50bc1437.js",
-      "_flowbite-vue-2cab183c.js"
+      "_flowbite-vue-a273e6c0.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/pages/Admin/Materi/Show.vue"
   },
   "resources/js/pages/Admin/Soal/Add.vue": {
-    "file": "assets/Add-c394c4d1.js",
+    "file": "assets/Add-9baa112d.js",
     "imports": [
       "resources/js/app.js",
       "_loader-50bc1437.js"
@@ -271,7 +277,7 @@
     "src": "resources/js/pages/Admin/Soal/Add.vue"
   },
   "resources/js/pages/Admin/Soal/Detail.vue": {
-    "file": "assets/Detail-064ed7a8.js",
+    "file": "assets/Detail-f188b71e.js",
     "imports": [
       "resources/js/app.js"
     ],
@@ -279,7 +285,7 @@
     "src": "resources/js/pages/Admin/Soal/Detail.vue"
   },
   "resources/js/pages/Admin/Soal/Edit.vue": {
-    "file": "assets/Edit-275d3189.js",
+    "file": "assets/Edit-c58af1d4.js",
     "imports": [
       "resources/js/app.js",
       "_loader-50bc1437.js"
@@ -288,19 +294,19 @@
     "src": "resources/js/pages/Admin/Soal/Edit.vue"
   },
   "resources/js/pages/Admin/Soal/ListEssay.vue": {
-    "file": "assets/ListEssay-21306754.js",
+    "file": "assets/ListEssay-dc818eca.js",
     "imports": [
       "resources/js/app.js",
-      "_Editor-349d73d4.js"
+      "_Editor-e2bdecdd.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/pages/Admin/Soal/ListEssay.vue"
   },
   "resources/js/pages/Admin/Soal/ListPg.vue": {
-    "file": "assets/ListPg-9b6fd4bf.js",
+    "file": "assets/ListPg-7be06d71.js",
     "imports": [
       "resources/js/app.js",
-      "_Editor-349d73d4.js"
+      "_Editor-e2bdecdd.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/pages/Admin/Soal/ListPg.vue"
@@ -309,16 +315,16 @@
     "dynamicImports": [
       "resources/js/components/Pagination.vue"
     ],
-    "file": "assets/Main-57b105f2.js",
+    "file": "assets/Main-291dfeaf.js",
     "imports": [
       "resources/js/app.js",
-      "_flowbite-vue-2cab183c.js"
+      "_flowbite-vue-a273e6c0.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/pages/Admin/Soal/Main.vue"
   },
   "resources/js/pages/Admin/Ujian/Add.vue": {
-    "file": "assets/Add-0a3c53c5.js",
+    "file": "assets/Add-66f015aa.js",
     "imports": [
       "resources/js/app.js",
       "_loader-50bc1437.js"
@@ -327,7 +333,7 @@
     "src": "resources/js/pages/Admin/Ujian/Add.vue"
   },
   "resources/js/pages/Admin/Ujian/Detail.vue": {
-    "file": "assets/Detail-fee65c2b.js",
+    "file": "assets/Detail-ac7dd69a.js",
     "imports": [
       "resources/js/app.js",
       "__plugin-vue_export-helper-c27b6911.js"
@@ -339,7 +345,7 @@
     "dynamicImports": [
       "resources/js/components/Pagination.vue"
     ],
-    "file": "assets/Hasil-845b4314.js",
+    "file": "assets/Hasil-409e2ba7.js",
     "imports": [
       "resources/js/app.js"
     ],
@@ -350,16 +356,16 @@
     "dynamicImports": [
       "resources/js/components/Pagination.vue"
     ],
-    "file": "assets/Main-faea12ba.js",
+    "file": "assets/Main-0ca07e21.js",
     "imports": [
       "resources/js/app.js",
-      "_flowbite-vue-2cab183c.js"
+      "_flowbite-vue-a273e6c0.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/pages/Admin/Ujian/Main.vue"
   },
   "resources/js/pages/Admin/User/AddGuru.vue": {
-    "file": "assets/AddGuru-a151cf86.js",
+    "file": "assets/AddGuru-4c2686a3.js",
     "imports": [
       "__plugin-vue_export-helper-c27b6911.js",
       "resources/js/app.js"
@@ -371,16 +377,16 @@
     "dynamicImports": [
       "resources/js/components/Pagination.vue"
     ],
-    "file": "assets/Guru-e6f49af9.js",
+    "file": "assets/Guru-69026832.js",
     "imports": [
       "resources/js/app.js",
-      "_flowbite-vue-2cab183c.js"
+      "_flowbite-vue-a273e6c0.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/pages/Admin/User/Guru.vue"
   },
   "resources/js/pages/Admin/User/Main.vue": {
-    "file": "assets/Main-de299e1e.js",
+    "file": "assets/Main-4461fd70.js",
     "imports": [
       "resources/js/app.js"
     ],
@@ -388,7 +394,7 @@
     "src": "resources/js/pages/Admin/User/Main.vue"
   },
   "resources/js/pages/Admin/User/Siswa.vue": {
-    "file": "assets/Siswa-101fb142.js",
+    "file": "assets/Siswa-10dce7ac.js",
     "imports": [
       "__plugin-vue_export-helper-c27b6911.js",
       "resources/js/app.js"
@@ -397,7 +403,7 @@
     "src": "resources/js/pages/Admin/User/Siswa.vue"
   },
   "resources/js/pages/Siswa/DetailMateri.vue": {
-    "file": "assets/DetailMateri-d4e44833.js",
+    "file": "assets/DetailMateri-b336ae43.js",
     "imports": [
       "resources/js/app.js"
     ],
@@ -408,23 +414,23 @@
     "dynamicImports": [
       "resources/js/components/Pagination.vue"
     ],
-    "file": "assets/HasilUjian-43bbc381.js",
+    "file": "assets/HasilUjian-c5528eea.js",
     "imports": [
       "resources/js/app.js",
-      "_flowbite-vue-2cab183c.js"
+      "_flowbite-vue-a273e6c0.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/pages/Siswa/HasilUjian.vue"
   },
   "resources/js/pages/Siswa/Home.vue": {
     "assets": [
-      "assets/materi_icon-9ae1060a.png",
       "assets/lms_icon-5a5fec6f.jpg",
       "assets/ilustrasi-639aa8bd.png"
     ],
-    "file": "assets/Home-32e6642f.js",
+    "file": "assets/Home-17f85707.js",
     "imports": [
-      "resources/js/app.js"
+      "resources/js/app.js",
+      "_materi_icon-9aeec084.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/pages/Siswa/Home.vue"
@@ -437,10 +443,10 @@
     "css": [
       "assets/Login-759f8247.css"
     ],
-    "file": "assets/Login-dfec7248.js",
+    "file": "assets/Login-66bdf2b9.js",
     "imports": [
       "resources/js/app.js",
-      "_EyeOffIcon-b66b209e.js",
+      "_EyeOffIcon-55acf17e.js",
       "__plugin-vue_export-helper-c27b6911.js"
     ],
     "isDynamicEntry": true,
@@ -453,7 +459,7 @@
     "dynamicImports": [
       "resources/js/components/Pagination.vue"
     ],
-    "file": "assets/Materi-8eb84d58.js",
+    "file": "assets/Materi-1206a45b.js",
     "imports": [
       "resources/js/app.js"
     ],
@@ -461,7 +467,7 @@
     "src": "resources/js/pages/Siswa/Materi.vue"
   },
   "resources/js/pages/Siswa/Profil.vue": {
-    "file": "assets/Profil-3d68ddce.js",
+    "file": "assets/Profil-c2341d37.js",
     "imports": [
       "_default_user-c0577ea9.js",
       "resources/js/app.js"
@@ -473,17 +479,17 @@
     "dynamicImports": [
       "resources/js/components/Pagination.vue"
     ],
-    "file": "assets/Ujian-8e5fa25b.js",
+    "file": "assets/Ujian-a49765be.js",
     "imports": [
       "resources/js/app.js",
-      "_flowbite-vue-2cab183c.js",
+      "_flowbite-vue-a273e6c0.js",
       "_loader-50bc1437.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/pages/Siswa/Ujian.vue"
   },
   "resources/js/pages/Tes/Index.vue": {
-    "file": "assets/Index-6ab38fdb.js",
+    "file": "assets/Index-a3ba008b.js",
     "imports": [
       "resources/js/app.js",
       "__plugin-vue_export-helper-c27b6911.js"

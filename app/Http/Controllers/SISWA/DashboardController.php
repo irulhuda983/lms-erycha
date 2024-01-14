@@ -22,7 +22,7 @@ class DashboardController extends Controller
 
     public function nilaiTertinggi()
     {
-        $query = UjianSiswa::orderBy('total', 'desc')->paginate($request->limit ?? 10);
+        $query = UjianSiswa::all();
 
         return UjianSiswaResource::collection($query);
     }

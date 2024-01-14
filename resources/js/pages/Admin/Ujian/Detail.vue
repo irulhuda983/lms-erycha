@@ -132,7 +132,16 @@ onMounted(() => {
                 </div>
             </div>
 
-            <ListPesertaUjian />
+            <ListPesertaUjian v-if="ujian.status == 'sedang_berlangsung'" />
+            <div v-else class="w-full box-border bg-white border-b text-gray-600 bg-white">
+                <div class="border-b px-6 py-3 text-black">
+                    <h1 class="text-sm font-bold">List Peserta Ujian</h1>
+                </div>
+
+                <div class="w-full box-border p-5">
+                    Tidak ada peserta yang masih ujian
+                </div>
+            </div>
         </div>
     </div>
 </template>
