@@ -207,8 +207,8 @@ onMounted(() => {
                             <img :src="MateriIcon" alt="" class="w-12">
                         </div>
                         <div>
-                            <p class="font-semibold">coba materi</p>
-                            <p class="text-[12px]">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eos, facilis.</p>
+                            <p class="font-semibold">{{ item.judul }}</p>
+                            <p class="text-[12px]">{{ item.excerpt }}</p>
                         </div>
                     </div>
                 </div>
