@@ -132,7 +132,7 @@ onMounted(() => {
 
                     <tbody>
                         <tr v-for="(item, i) in dataset" :key="i" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <td class="px-6 py-4 font-normal text-gray-900 whitespace-nowrap dark:text-white" style="width: 1%;">1</td>
+                            <td class="px-6 py-4 font-normal text-gray-900 whitespace-nowrap dark:text-white" style="width: 1%;">{{ i + 1 }}</td>
                             <td class="px-6 py-4 font-normal text-gray-900 whitespace-nowrap dark:text-white">
                                 <div>{{ item.siswa.nama }}</div>
                                 <!-- <div class="text-[8px] text-gray-500">NIK : {{  }}</div> -->
