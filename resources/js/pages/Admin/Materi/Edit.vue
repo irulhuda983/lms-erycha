@@ -3,6 +3,7 @@ import { ref, defineAsyncComponent, reactive, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import loader from '@/assets/gif/loader.gif'
 import { useNotification } from "@kyvg/vue3-notification"
+import Editor from '@tinymce/tinymce-vue'
 
 const { notify } = useNotification()
 
@@ -19,6 +20,30 @@ const mediaFile = ref()
 const mediaVideo = ref()
 
 const isLoading = ref(false)
+
+const tinyKey = ref('zrsng3633x1bpntx7mrn4yx8efkpcyn3qt3r5sebh01ijff5') // no-api-key
+
+const init = reactive({
+    height: 400,
+    menubar: true,
+    plugins: [
+        'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+        'searchreplace wordcount visualblocks visualchars code fullscreen',
+        'insertdatetime media nonbreaking save table contextmenu directionality',
+        'emoticons template paste textcolor colorpicker textpattern imagetools uploadimage paste formula'
+    ],
+                                                
+    toolbar: 'undo redo | bold italic fontselect fontsizeselect | alignleft aligncenter alignright bullist numlist  backcolor forecolor | formula code | imagetools link image paste ',
+    fontsize_formats: '8pt 9pt 10pt 11pt 12pt 14pt 18pt 24pt 36pt',
+    paste_data_images: true,
+                                                
+    images_upload_handler: function (blobInfo, success, failure) {
+        success('data:' + blobInfo.blob().type + ';base64,' + blobInfo.base64());
+    },
+    image_class_list: [
+        {title: 'Responsive', value: 'img-responsive'}
+    ],
+})
 
 const payload = reactive({
     id: null,
@@ -375,7 +400,8 @@ onMounted(() => {
                 </div>
                 <div class="mb-6 w-full">
                     <label for="deskripsi" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deskripsi Materi</label>
-                    <textarea id="deskripsi" v-model="payload.deskripsi" rows="5" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="sebuah Rumus untuk menghitung sisi terpanjang segitiga ......"></textarea>
+                    <editor v-model="payload.deskripsi" :api-key="tinyKey" :init="init" />
+                    <!-- <textarea id="deskripsi" v-model="payload.deskripsi" rows="5" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="sebuah Rumus untuk menghitung sisi terpanjang segitiga ......"></textarea> -->
 
                 </div>
 

@@ -55,6 +55,12 @@ const routes = [
                 name: "siswaProfil",
                 component: () => import('@/pages/Siswa/Profil.vue'),
             },
+            {
+                meta: { title: "panduan", menu: 'siswaPanduan'},
+                path: "/panduan",
+                name: "siswaPanduan",
+                component: () => import('@/pages/Siswa/Panduan.vue'),
+            },
         ]
     },
     {

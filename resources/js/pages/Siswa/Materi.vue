@@ -85,7 +85,7 @@ onMounted(() => {
         <div class="w-full box-border grid grid-cols-1 lg:grid-cols-4 gap-5 mb-5">
 
             <router-link
-                class="w-full bg-white box-border shadow-secondary rounded-[8px] overflow-hidden h-[288px] relative cursor-pointer"
+                class="w-full bg-white box-border pb-5 shadow-secondary rounded-[8px] overflow-hidden h-[350px] relative cursor-pointer"
                 v-for="(item, i) in dataset" :key="i"
                 :to="{ name: 'siswaDetailMateri', params: { id: item.id} }"
             >
@@ -94,10 +94,13 @@ onMounted(() => {
                 </div>
 
                 <div class="w-full p-3 box-border">
-                    <p class="text-[10px] text-[#424242] mb-[8px] uppercase">{{ item.mapel }}</p>
-                    <p class="text-[#222222] text-[12px] lg:text-[16px] font-semibold mb-2">{{ item.judul }}</p>
-                    <p class="text-[#222222] text-[10px]">{{ item.excerpt }}</p>
-                    <p class="absolute bottom-4 text-[#6D6D6D] text-[12px]">{{ item.created_at }}</p>
+                    <p class="text-[#222222] text-[12px] lg:text-[16px] font-semibold mb-[8px] mt-2">{{ item.judul }}</p>
+                    <div class="w-full flex items-center justify-between mb-px">
+                        <p class="text-[10px] text-[#424242] uppercase">{{ item.mapel }}</p>
+                        <p class="text-[#6D6D6D] text-[10px] italic">{{ item.date_created }}</p>
+                    </div>
+                    <p class="text-[#6D6D6D] text-[9px] italic mb-4">Created By : {{ item.guru  }}</p>
+                    <p class="text-[#222222] text-[10px]" v-html="item.excerpt"></p>
                 </div>
             </router-link>
         </div>

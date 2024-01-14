@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class MateriResource extends JsonResource
 {
@@ -33,7 +34,8 @@ class MateriResource extends JsonResource
             'media_file' => $this->media_file ? url('api/upload/' . $this->media_file) : null,
             'media_video' => $this->media_video ? url('api/upload/' . $this->media_video) : null,
             'jumlah_dibaca' => $this->materiRead->count(),
-            'created_at' => date('Y-m-d', strtotime($this->created_at))
+            'created_at' => date('Y-m-d', strtotime($this->created_at)),
+            'date_created' => $this->created_at->diffForHumans()
         ];
     }
 }
