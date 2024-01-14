@@ -39,7 +39,11 @@ const fetchData = async () => {
             params: params,
         })
         // console.log(data)
-        dataset.value = data.data
+        const items = data.data
+
+        const sorted = items.sort((a, b) => b.total - a.total);
+        // nilaiTertinggi.value = sorted.slice(0,10)
+        dataset.value = sorted
     }catch(e) {
         if(e.response.status == 401) {
             localStorage.removeItem('TOKEN')

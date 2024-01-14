@@ -25,7 +25,7 @@ class HasilUjianResource extends JsonResource
             'jml_pg_salah' => $this->jml_pg_salah,
             'skor_pg' => $this->skor_pg,
             'skor_essay' => $this->skor_essay,
-            'total' => $this->total,
+            'total' => (float) number_format($this->total, 2),
             'ujian' => $this->ujian ? new UjianResource($this->ujian) : null,
             'soal' => $this->ujian ? new SoalResource($this->ujian->soal) : null,
             'soalItem' => SoalItemResource::collection($this->ujian->soal->items),
